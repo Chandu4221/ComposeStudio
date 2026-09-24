@@ -10,6 +10,9 @@ dependencies {
     implementation(compose.desktop.currentOs)
     implementation(libs.kotlinx.coroutinesSwing)
     implementation(libs.compose.uiToolingPreview)
+    implementation(libs.compose.material3)
+    implementation(libs.material.icons.extended)
+    implementation(libs.compose.components.resources)
 }
 
 compose.desktop {
