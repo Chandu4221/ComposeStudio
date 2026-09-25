@@ -63,6 +63,8 @@ import io.github.chandu4221.composestudio.ui.molecules.AccordionHeader
 import io.github.chandu4221.composestudio.ui.molecules.AlignmentPicker
 import io.github.chandu4221.composestudio.ui.molecules.ModifierItemRow
 import io.github.chandu4221.composestudio.ui.molecules.SegmentedControl
+import io.github.chandu4221.composestudio.ui.molecules.SidebarPosition
+import io.github.chandu4221.composestudio.ui.molecules.SidebarTrigger
 import io.github.chandu4221.composestudio.ui.molecules.SizeStepSlider
 import kotlinx.serialization.json.JsonPrimitive
 
@@ -72,7 +74,8 @@ import kotlinx.serialization.json.JsonPrimitive
  */
 @Composable
 fun RightInspectorPanel(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClose: (() -> Unit)? = null
 ) {
     val store = LocalStudioStore.current
     val projectState by store.state.collectAsState()
@@ -108,6 +111,26 @@ fun RightInspectorPanel(
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                 if (selectedNode == null) {
+                    if (onClose != null) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "Inspector",
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
+                            SidebarTrigger(
+                                isOpen = true,
+                                onToggle = onClose,
+                                position = SidebarPosition.Right
+                            )
+                        }
+                    }
+
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -150,12 +173,22 @@ fun RightInspectorPanel(
                             }
                         }
 
-                        Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(4.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
                             IconButton(
                                 onClick = { store.dispatch(StudioIntent.DeleteNode(selectedNode.id)) },
                                 modifier = Modifier.size(32.dp)
                             ) {
                                 StudioIcon(Icons.Default.DeleteOutline, "Delete", tint = MaterialTheme.colorScheme.error)
+                            }
+                            if (onClose != null) {
+                                SidebarTrigger(
+                                    isOpen = true,
+                                    onToggle = onClose,
+                                    position = SidebarPosition.Right
+                                )
                             }
                         }
                     }

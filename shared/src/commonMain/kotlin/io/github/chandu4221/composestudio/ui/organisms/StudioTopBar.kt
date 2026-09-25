@@ -45,8 +45,6 @@ import io.github.chandu4221.composestudio.theme.AppTheme
 import io.github.chandu4221.composestudio.ui.atoms.StatusDot
 import io.github.chandu4221.composestudio.ui.atoms.StudioIcon
 import io.github.chandu4221.composestudio.ui.molecules.SegmentedControl
-import io.github.chandu4221.composestudio.ui.molecules.SidebarPosition
-import io.github.chandu4221.composestudio.ui.molecules.SidebarTrigger
 
 /**
  * Top application navigation bar organism containing editor tools and project details.
@@ -55,10 +53,6 @@ import io.github.chandu4221.composestudio.ui.molecules.SidebarTrigger
 fun StudioTopBar(
     projectName: String = "My Awesome App",
     saveStatusText: String = "Saved just now",
-    isLeftPanelOpen: Boolean = true,
-    onToggleLeftPanel: () -> Unit = {},
-    isRightPanelOpen: Boolean = true,
-    onToggleRightPanel: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     var selectedToolIndex by remember { mutableStateOf(0) }
@@ -76,42 +70,31 @@ fun StudioTopBar(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-            // Left: Sidebar Toggle + Compose Studio Logo
+            // Left: Compose Studio Logo
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                SidebarTrigger(
-                    isOpen = isLeftPanelOpen,
-                    onToggle = onToggleLeftPanel,
-                    position = SidebarPosition.Left
-                )
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                Box(
+                    modifier = Modifier
+                        .size(32.dp)
+                        .clip(MaterialTheme.shapes.small)
+                        .background(MaterialTheme.colorScheme.primary),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .size(32.dp)
-                            .clip(MaterialTheme.shapes.small)
-                            .background(MaterialTheme.colorScheme.primary),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        StudioIcon(
-                            imageVector = Icons.Default.Widgets,
-                            contentDescription = "Compose Studio Logo",
-                            tint = MaterialTheme.colorScheme.onPrimary,
-                            size = 18.dp
-                        )
-                    }
-                    Text(
-                        text = "Compose Studio",
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onSurface
+                    StudioIcon(
+                        imageVector = Icons.Default.Widgets,
+                        contentDescription = "Compose Studio Logo",
+                        tint = MaterialTheme.colorScheme.onPrimary,
+                        size = 18.dp
                     )
                 }
+                Text(
+                    text = "Compose Studio",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
             }
 
             // Center: Editing tools pill
@@ -177,59 +160,43 @@ fun StudioTopBar(
                 }
             }
 
-            // Right: User Profile & Cloud Status + Inspector Sidebar Trigger
+            // Right: User Profile & Cloud Status
             Row(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalArrangement = Arrangement.spacedBy(10.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                Box(
+                    modifier = Modifier
+                        .size(36.dp)
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colorScheme.primaryContainer),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .size(36.dp)
-                            .clip(CircleShape)
-                            .background(MaterialTheme.colorScheme.primaryContainer),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = "A",
-                            style = MaterialTheme.typography.titleMedium,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer
-                        )
-                    }
-
-                    Column {
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(6.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = projectName,
-                                style = MaterialTheme.typography.titleSmall,
-                                color = MaterialTheme.colorScheme.onSurface
-                            )
-                            StatusDot()
-                        }
-                        Text(
-                            text = saveStatusText,
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
+                    Text(
+                        text = "A",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
                 }
 
-                VerticalDivider(
-                    modifier = Modifier.height(24.dp),
-                    color = MaterialTheme.colorScheme.outlineVariant
-                )
-
-                SidebarTrigger(
-                    isOpen = isRightPanelOpen,
-                    onToggle = onToggleRightPanel,
-                    position = SidebarPosition.Right
-                )
+                Column {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = projectName,
+                            style = MaterialTheme.typography.titleSmall,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                        StatusDot()
+                    }
+                    Text(
+                        text = saveStatusText,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
             }
         }
         HorizontalDivider(

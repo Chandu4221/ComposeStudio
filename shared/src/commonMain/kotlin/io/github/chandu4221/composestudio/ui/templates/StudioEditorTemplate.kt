@@ -49,13 +49,8 @@ fun StudioEditorTemplate(
 
     CompositionLocalProvider(LocalStudioStore provides store) {
         Column(modifier = modifier.fillMaxSize()) {
-            // Top Navigation Bar with Sidebar Triggers
-            StudioTopBar(
-                isLeftPanelOpen = isLeftPanelOpen,
-                onToggleLeftPanel = { isLeftPanelOpen = !isLeftPanelOpen },
-                isRightPanelOpen = isRightPanelOpen,
-                onToggleRightPanel = { isRightPanelOpen = !isRightPanelOpen }
-            )
+            // Top Navigation Bar
+            StudioTopBar()
 
             // 3-Pane Body: Collapsible Left Panel | Center Viewport Canvas | Collapsible Right Inspector
             Row(modifier = Modifier.fillMaxSize()) {
@@ -67,7 +62,8 @@ fun StudioEditorTemplate(
                 ) {
                     Row {
                         LeftComponentsPanel(
-                            modifier = Modifier.width(leftPanelWidth)
+                            modifier = Modifier.width(leftPanelWidth),
+                            onClose = { isLeftPanelOpen = false }
                         )
 
                         PanelSplitter(
@@ -121,7 +117,8 @@ fun StudioEditorTemplate(
                         )
 
                         RightInspectorPanel(
-                            modifier = Modifier.width(rightPanelWidth)
+                            modifier = Modifier.width(rightPanelWidth),
+                            onClose = { isRightPanelOpen = false }
                         )
                     }
                 }

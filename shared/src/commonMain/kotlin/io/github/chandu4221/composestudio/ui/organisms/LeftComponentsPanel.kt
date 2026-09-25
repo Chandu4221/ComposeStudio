@@ -47,6 +47,8 @@ import io.github.chandu4221.composestudio.ui.molecules.AccordionHeader
 import io.github.chandu4221.composestudio.ui.molecules.ComponentPaletteItem
 import io.github.chandu4221.composestudio.ui.molecules.SearchField
 import io.github.chandu4221.composestudio.ui.molecules.SegmentedControl
+import io.github.chandu4221.composestudio.ui.molecules.SidebarPosition
+import io.github.chandu4221.composestudio.ui.molecules.SidebarTrigger
 
 private val CATEGORY_DISPLAY_NAMES = mapOf(
     "INPUT" to "Actions & Inputs",
@@ -65,6 +67,7 @@ private val CATEGORY_ORDER = listOf("INPUT", "LAYOUT", "NAVIGATION", "SURFACE", 
 @Composable
 fun LeftComponentsPanel(
     modifier: Modifier = Modifier,
+    onClose: (() -> Unit)? = null,
     onComponentSelected: (String) -> Unit = {}
 ) {
     val store = LocalStudioStore.current
@@ -123,6 +126,21 @@ fun LeftComponentsPanel(
                         .verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
+                    // Header with Sidebar Trigger
+                    if (onClose != null) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Start,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            SidebarTrigger(
+                                isOpen = true,
+                                onToggle = onClose,
+                                position = SidebarPosition.Left
+                            )
+                        }
+                    }
+
                     // Tabs: Parts / Layers
                     SegmentedControl(
                         options = listOf("Parts", "Layers"),
