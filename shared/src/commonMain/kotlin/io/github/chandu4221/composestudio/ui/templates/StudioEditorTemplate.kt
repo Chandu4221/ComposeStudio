@@ -49,7 +49,7 @@ fun StudioEditorTemplate(
 
                 PanelSplitter(
                     onResize = { deltaDp ->
-                        leftPanelWidth = (leftPanelWidth + deltaDp).coerceIn(220.dp, 520.dp)
+                        leftPanelWidth = (leftPanelWidth + deltaDp).coerceIn(240.dp, 520.dp)
                     }
                 )
 
@@ -57,7 +57,7 @@ fun StudioEditorTemplate(
 
                 PanelSplitter(
                     onResize = { deltaDp ->
-                        rightPanelWidth = (rightPanelWidth - deltaDp).coerceIn(280.dp, 640.dp)
+                        rightPanelWidth = (rightPanelWidth - deltaDp).coerceIn(320.dp, 640.dp)
                     }
                 )
 

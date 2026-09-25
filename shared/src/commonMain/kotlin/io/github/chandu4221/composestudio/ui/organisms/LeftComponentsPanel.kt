@@ -104,26 +104,32 @@ fun LeftComponentsPanel(
         color = MaterialTheme.colorScheme.surface
     ) {
         BoxWithConstraints(
-            modifier = Modifier
-                .fillMaxSize()
-                .horizontalScroll(rememberScrollState())
+            modifier = Modifier.fillMaxSize()
         ) {
-            val contentWidth = maxOf(maxWidth, 240.dp)
-            Column(
+            val panelWidth = maxWidth
+            val minWidth = 240.dp
+            val isScrollable = panelWidth < minWidth
+
+            Box(
                 modifier = Modifier
-                    .width(contentWidth)
-                    .fillMaxHeight()
-                    .padding(16.dp)
-                    .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                    .fillMaxSize()
+                    .then(if (isScrollable) Modifier.horizontalScroll(rememberScrollState()) else Modifier)
             ) {
-                // Tabs: Parts / Layers
-                SegmentedControl(
-                    options = listOf("Parts", "Layers"),
-                    selectedIndex = selectedTab,
-                    onSelect = { selectedTab = it },
-                    modifier = Modifier.fillMaxWidth()
-                )
+                Column(
+                    modifier = Modifier
+                        .then(if (isScrollable) Modifier.width(minWidth) else Modifier.fillMaxWidth())
+                        .fillMaxHeight()
+                        .padding(16.dp)
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
+                    // Tabs: Parts / Layers
+                    SegmentedControl(
+                        options = listOf("Parts", "Layers"),
+                        selectedIndex = selectedTab,
+                        onSelect = { selectedTab = it },
+                        modifier = Modifier.fillMaxWidth()
+                    )
 
                 if (selectedTab == 0) {
                     // Search
@@ -241,6 +247,7 @@ fun LeftComponentsPanel(
             }
         }
     }
+}
 }
 
 /**

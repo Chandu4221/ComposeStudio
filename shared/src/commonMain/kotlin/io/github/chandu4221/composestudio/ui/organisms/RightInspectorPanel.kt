@@ -88,19 +88,25 @@ fun RightInspectorPanel(
         color = MaterialTheme.colorScheme.surface
     ) {
         BoxWithConstraints(
-            modifier = Modifier
-                .fillMaxSize()
-                .horizontalScroll(rememberScrollState())
+            modifier = Modifier.fillMaxSize()
         ) {
-            val contentWidth = maxOf(maxWidth, 320.dp)
-            Column(
+            val panelWidth = maxWidth
+            val minWidth = 320.dp
+            val isScrollable = panelWidth < minWidth
+
+            Box(
                 modifier = Modifier
-                    .width(contentWidth)
-                    .fillMaxHeight()
-                    .padding(16.dp)
-                    .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
+                    .fillMaxSize()
+                    .then(if (isScrollable) Modifier.horizontalScroll(rememberScrollState()) else Modifier)
             ) {
+                Column(
+                    modifier = Modifier
+                        .then(if (isScrollable) Modifier.width(minWidth) else Modifier.fillMaxWidth())
+                        .fillMaxHeight()
+                        .padding(16.dp)
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
+                ) {
                 if (selectedNode == null) {
                     Box(
                         modifier = Modifier
@@ -259,6 +265,7 @@ fun RightInspectorPanel(
             }
         }
     }
+}
 }
 
 /**
