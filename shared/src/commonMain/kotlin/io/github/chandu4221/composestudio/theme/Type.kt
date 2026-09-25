@@ -2,16 +2,9 @@ package io.github.chandu4221.composestudio.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.platform.Font
 
-val InterFontFamily = FontFamily(
-    Font("inter.ttf", FontWeight.Light),
-    Font("inter.ttf", FontWeight.Normal),
-    Font("inter.ttf", FontWeight.Medium),
-    Font("inter.ttf", FontWeight.SemiBold),
-    Font("inter.ttf", FontWeight.Bold)
-)
+expect val InterFontFamily: FontFamily
+
 private val defaultTypography = Typography()
 
 val AppTypography = Typography(

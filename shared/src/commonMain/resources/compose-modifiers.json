@@ -1,0 +1,2003 @@
+{
+  "composeMultiplatformVersion": "1.7.3",
+  "material3Version": "1.3.1",
+  "totalCount": 55,
+  "modifiers": [
+    {
+      "id": "absoluteOffset",
+      "displayName": "AbsoluteOffset",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "x",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "y",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "absolutePadding",
+      "displayName": "AbsolutePadding",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "left",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "top",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "right",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "bottom",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "align",
+      "displayName": "Align",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "CORE",
+      "applicableScopes": [
+        "BOX",
+        "COLUMN",
+        "ROW"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "alignment",
+          "type": "ALIGNMENT",
+          "rawKotlinType": "Alignment",
+          "isNullable": false,
+          "hasDefault": false
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "alignBy",
+      "displayName": "AlignBy",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "COLUMN",
+        "ROW"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [],
+      "callbacks": [
+        {
+          "name": "alignmentLineBlock",
+          "signature": "(Measured) -> Int",
+          "hasDefault": false
+        }
+      ]
+    },
+    {
+      "id": "alignByBaseline",
+      "displayName": "AlignByBaseline",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ROW"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [],
+      "callbacks": []
+    },
+    {
+      "id": "anchoredDraggable",
+      "displayName": "AnchoredDraggable",
+      "packageName": "androidx.compose.foundation.gestures",
+      "category": "POINTER",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": true,
+      "experimentalAnnotations": [
+        "androidx.compose.foundation.ExperimentalFoundationApi"
+      ],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "state",
+          "type": "STATE",
+          "rawKotlinType": "AnchoredDraggableState<Any>",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "reverseDirection",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "orientation",
+          "type": "ORIENTATION",
+          "rawKotlinType": "Orientation",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "overscrollEffect",
+          "type": "SCROLL_SPEC",
+          "rawKotlinType": "OverscrollEffect?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "startDragImmediately",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "animateItem",
+      "displayName": "AnimateItem",
+      "packageName": "androidx.compose.foundation.lazy",
+      "category": "ANIMATION",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "LAZY_ITEM"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "fadeInSpec",
+          "type": "ANIMATION_SPEC",
+          "rawKotlinType": "FiniteAnimationSpec<Float>?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "placementSpec",
+          "type": "ANIMATION_SPEC",
+          "rawKotlinType": "FiniteAnimationSpec<IntOffset>?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "fadeOutSpec",
+          "type": "ANIMATION_SPEC",
+          "rawKotlinType": "FiniteAnimationSpec<Float>?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "aspectRatio",
+      "displayName": "AspectRatio",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "CORE",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "ratio",
+          "type": "FLOAT",
+          "rawKotlinType": "Float",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "matchHeightConstraintsFirst",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "background",
+      "displayName": "Background",
+      "packageName": "androidx.compose.foundation",
+      "category": "DRAWING",
+      "tier": "CORE",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "color",
+          "type": "COLOR",
+          "rawKotlinType": "Color",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "shape",
+          "type": "SHAPE",
+          "rawKotlinType": "Shape",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "basicMarquee",
+      "displayName": "BasicMarquee",
+      "packageName": "androidx.compose.foundation",
+      "category": "ANIMATION",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "iterations",
+          "type": "INT",
+          "rawKotlinType": "Int",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "animationMode",
+          "type": "ENUM",
+          "rawKotlinType": "MarqueeAnimationMode",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "repeatDelayMillis",
+          "type": "INT",
+          "rawKotlinType": "Int",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "initialDelayMillis",
+          "type": "INT",
+          "rawKotlinType": "Int",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "spacing",
+          "type": "SPACING",
+          "rawKotlinType": "MarqueeSpacing",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "velocity",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "border",
+      "displayName": "Border",
+      "packageName": "androidx.compose.foundation",
+      "category": "DRAWING",
+      "tier": "CORE",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "width",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "color",
+          "type": "COLOR",
+          "rawKotlinType": "Color",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "shape",
+          "type": "SHAPE",
+          "rawKotlinType": "Shape",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "clickable",
+      "displayName": "Clickable",
+      "packageName": "androidx.compose.foundation",
+      "category": "POINTER",
+      "tier": "CORE",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "onClickLabel",
+          "type": "STRING",
+          "rawKotlinType": "String?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "role",
+          "type": "ROLE",
+          "rawKotlinType": "Role?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onClick",
+          "signature": "() -> Unit",
+          "hasDefault": false
+        }
+      ]
+    },
+    {
+      "id": "combinedClickable",
+      "displayName": "CombinedClickable",
+      "packageName": "androidx.compose.foundation",
+      "category": "POINTER",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": true,
+      "experimentalAnnotations": [
+        "androidx.compose.foundation.ExperimentalFoundationApi"
+      ],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": false
+        },
+        {
+          "name": "indication",
+          "type": "INTERACTION",
+          "rawKotlinType": "Indication?",
+          "isNullable": true,
+          "hasDefault": false
+        },
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "onClickLabel",
+          "type": "STRING",
+          "rawKotlinType": "String?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "role",
+          "type": "ROLE",
+          "rawKotlinType": "Role?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "onLongClickLabel",
+          "type": "STRING",
+          "rawKotlinType": "String?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onLongClick",
+          "signature": "() -> Unit",
+          "hasDefault": true
+        },
+        {
+          "name": "onDoubleClick",
+          "signature": "() -> Unit",
+          "hasDefault": true
+        },
+        {
+          "name": "onClick",
+          "signature": "() -> Unit",
+          "hasDefault": false
+        }
+      ]
+    },
+    {
+      "id": "defaultMinSize",
+      "displayName": "DefaultMinSize",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "minWidth",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "minHeight",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "draggable",
+      "displayName": "Draggable",
+      "packageName": "androidx.compose.foundation.gestures",
+      "category": "POINTER",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "state",
+          "type": "STATE",
+          "rawKotlinType": "DraggableState",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "orientation",
+          "type": "ORIENTATION",
+          "rawKotlinType": "Orientation",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "startDragImmediately",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "reverseDirection",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onDragStarted",
+          "signature": "(CoroutineScope, Offset, Continuation<Unit>) -> Any?",
+          "hasDefault": true
+        },
+        {
+          "name": "onDragStopped",
+          "signature": "(CoroutineScope, Float, Continuation<Unit>) -> Any?",
+          "hasDefault": true
+        }
+      ]
+    },
+    {
+      "id": "draggable2D",
+      "displayName": "Draggable2D",
+      "packageName": "androidx.compose.foundation.gestures",
+      "category": "POINTER",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": true,
+      "experimentalAnnotations": [
+        "androidx.compose.foundation.ExperimentalFoundationApi"
+      ],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "state",
+          "type": "STATE",
+          "rawKotlinType": "Draggable2DState",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "startDragImmediately",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "reverseDirection",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onDragStarted",
+          "signature": "(Offset) -> Unit",
+          "hasDefault": true
+        },
+        {
+          "name": "onDragStopped",
+          "signature": "(Velocity) -> Unit",
+          "hasDefault": true
+        }
+      ]
+    },
+    {
+      "id": "fillMaxHeight",
+      "displayName": "FillMaxHeight",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "CORE",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "fraction",
+          "type": "FLOAT",
+          "rawKotlinType": "Float",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "fillMaxSize",
+      "displayName": "FillMaxSize",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "CORE",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "fraction",
+          "type": "FLOAT",
+          "rawKotlinType": "Float",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "fillMaxWidth",
+      "displayName": "FillMaxWidth",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "CORE",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "fraction",
+          "type": "FLOAT",
+          "rawKotlinType": "Float",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "fillParentMaxHeight",
+      "displayName": "FillParentMaxHeight",
+      "packageName": "androidx.compose.foundation.lazy",
+      "category": "LAYOUT",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "LAZY_ITEM"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "fraction",
+          "type": "FLOAT",
+          "rawKotlinType": "Float",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "fillParentMaxSize",
+      "displayName": "FillParentMaxSize",
+      "packageName": "androidx.compose.foundation.lazy",
+      "category": "LAYOUT",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "LAZY_ITEM"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "fraction",
+          "type": "FLOAT",
+          "rawKotlinType": "Float",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "fillParentMaxWidth",
+      "displayName": "FillParentMaxWidth",
+      "packageName": "androidx.compose.foundation.lazy",
+      "category": "LAYOUT",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "LAZY_ITEM"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "fraction",
+          "type": "FLOAT",
+          "rawKotlinType": "Float",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "focusGroup",
+      "displayName": "FocusGroup",
+      "packageName": "androidx.compose.foundation",
+      "category": "FOCUS",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [],
+      "callbacks": []
+    },
+    {
+      "id": "focusable",
+      "displayName": "Focusable",
+      "packageName": "androidx.compose.foundation",
+      "category": "FOCUS",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "height",
+      "displayName": "Height",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "CORE",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "height",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": false
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "heightIn",
+      "displayName": "HeightIn",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "min",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "max",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "horizontalScroll",
+      "displayName": "HorizontalScroll",
+      "packageName": "androidx.compose.foundation",
+      "category": "SCROLL",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "state",
+          "type": "STATE",
+          "rawKotlinType": "ScrollState",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "flingBehavior",
+          "type": "FLING_BEHAVIOR",
+          "rawKotlinType": "FlingBehavior?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "reverseScrolling",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "hoverable",
+      "displayName": "Hoverable",
+      "packageName": "androidx.compose.foundation",
+      "category": "POINTER",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "matchParentSize",
+      "displayName": "MatchParentSize",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "BOX"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [],
+      "callbacks": []
+    },
+    {
+      "id": "offset",
+      "displayName": "Offset",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "CORE",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "x",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "y",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "onDrag",
+      "displayName": "OnDrag",
+      "packageName": "androidx.compose.foundation.gestures",
+      "category": "POINTER",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": true,
+      "experimentalAnnotations": [
+        "androidx.compose.foundation.ExperimentalFoundationApi"
+      ],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "matcher",
+          "type": "POINTER_INPUT",
+          "rawKotlinType": "PointerMatcher",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onDragStart",
+          "signature": "(Offset) -> Unit",
+          "hasDefault": true
+        },
+        {
+          "name": "onDragCancel",
+          "signature": "() -> Unit",
+          "hasDefault": true
+        },
+        {
+          "name": "onDragEnd",
+          "signature": "() -> Unit",
+          "hasDefault": true
+        },
+        {
+          "name": "onDrag",
+          "signature": "(Offset) -> Unit",
+          "hasDefault": false
+        }
+      ]
+    },
+    {
+      "id": "padding",
+      "displayName": "Padding",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "CORE",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "all",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": false
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "paddingFrom",
+      "displayName": "PaddingFrom",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "alignmentLine",
+          "type": "ALIGNMENT",
+          "rawKotlinType": "AlignmentLine",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "before",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "after",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "paddingFromBaseline",
+      "displayName": "PaddingFromBaseline",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "top",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "bottom",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "requiredHeight",
+      "displayName": "RequiredHeight",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "intrinsicSize",
+          "type": "INTRINSIC_SIZE",
+          "rawKotlinType": "IntrinsicSize",
+          "isNullable": false,
+          "hasDefault": false
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "requiredHeightIn",
+      "displayName": "RequiredHeightIn",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "min",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "max",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "requiredSize",
+      "displayName": "RequiredSize",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "width",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "height",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": false
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "requiredSizeIn",
+      "displayName": "RequiredSizeIn",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "minWidth",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "minHeight",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "maxWidth",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "maxHeight",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "requiredWidth",
+      "displayName": "RequiredWidth",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "intrinsicSize",
+          "type": "INTRINSIC_SIZE",
+          "rawKotlinType": "IntrinsicSize",
+          "isNullable": false,
+          "hasDefault": false
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "requiredWidthIn",
+      "displayName": "RequiredWidthIn",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "min",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "max",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "scrollable",
+      "displayName": "Scrollable",
+      "packageName": "androidx.compose.foundation.gestures",
+      "category": "SCROLL",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "state",
+          "type": "STATE",
+          "rawKotlinType": "ScrollableState",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "orientation",
+          "type": "ORIENTATION",
+          "rawKotlinType": "Orientation",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "overscrollEffect",
+          "type": "SCROLL_SPEC",
+          "rawKotlinType": "OverscrollEffect?",
+          "isNullable": true,
+          "hasDefault": false
+        },
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "reverseDirection",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "flingBehavior",
+          "type": "FLING_BEHAVIOR",
+          "rawKotlinType": "FlingBehavior?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "bringIntoViewSpec",
+          "type": "ANIMATION_SPEC",
+          "rawKotlinType": "BringIntoViewSpec?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "selectable",
+      "displayName": "Selectable",
+      "packageName": "androidx.compose.foundation.selection",
+      "category": "POINTER",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "selected",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": false
+        },
+        {
+          "name": "indication",
+          "type": "INTERACTION",
+          "rawKotlinType": "Indication?",
+          "isNullable": true,
+          "hasDefault": false
+        },
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "role",
+          "type": "ROLE",
+          "rawKotlinType": "Role?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onClick",
+          "signature": "() -> Unit",
+          "hasDefault": false
+        }
+      ]
+    },
+    {
+      "id": "selectableGroup",
+      "displayName": "SelectableGroup",
+      "packageName": "androidx.compose.foundation.selection",
+      "category": "POINTER",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [],
+      "callbacks": []
+    },
+    {
+      "id": "size",
+      "displayName": "Size",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "CORE",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "size",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": false
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "sizeIn",
+      "displayName": "SizeIn",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "minWidth",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "minHeight",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "maxWidth",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "maxHeight",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "toggleable",
+      "displayName": "Toggleable",
+      "packageName": "androidx.compose.foundation.selection",
+      "category": "POINTER",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "value",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": false
+        },
+        {
+          "name": "indication",
+          "type": "INTERACTION",
+          "rawKotlinType": "Indication?",
+          "isNullable": true,
+          "hasDefault": false
+        },
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "role",
+          "type": "ROLE",
+          "rawKotlinType": "Role?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onValueChange",
+          "signature": "(Boolean) -> Unit",
+          "hasDefault": false
+        }
+      ]
+    },
+    {
+      "id": "transformable",
+      "displayName": "Transformable",
+      "packageName": "androidx.compose.foundation.gestures",
+      "category": "POINTER",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "state",
+          "type": "STATE",
+          "rawKotlinType": "TransformableState",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "lockRotationOnZoomPan",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "canPan",
+          "signature": "(Offset) -> Boolean",
+          "hasDefault": false
+        }
+      ]
+    },
+    {
+      "id": "triStateToggleable",
+      "displayName": "TriStateToggleable",
+      "packageName": "androidx.compose.foundation.selection",
+      "category": "POINTER",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "state",
+          "type": "STATE",
+          "rawKotlinType": "ToggleableState",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": false
+        },
+        {
+          "name": "indication",
+          "type": "INTERACTION",
+          "rawKotlinType": "Indication?",
+          "isNullable": true,
+          "hasDefault": false
+        },
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "role",
+          "type": "ROLE",
+          "rawKotlinType": "Role?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onClick",
+          "signature": "() -> Unit",
+          "hasDefault": false
+        }
+      ]
+    },
+    {
+      "id": "verticalScroll",
+      "displayName": "VerticalScroll",
+      "packageName": "androidx.compose.foundation",
+      "category": "SCROLL",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "state",
+          "type": "STATE",
+          "rawKotlinType": "ScrollState",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "flingBehavior",
+          "type": "FLING_BEHAVIOR",
+          "rawKotlinType": "FlingBehavior?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "reverseScrolling",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "weight",
+      "displayName": "Weight",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "CORE",
+      "applicableScopes": [
+        "COLUMN",
+        "ROW"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "weight",
+          "type": "FLOAT",
+          "rawKotlinType": "Float",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "fill",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "width",
+      "displayName": "Width",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "CORE",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "width",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": false
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "widthIn",
+      "displayName": "WidthIn",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "min",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "max",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "wrapContentHeight",
+      "displayName": "WrapContentHeight",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "align",
+          "type": "ALIGNMENT",
+          "rawKotlinType": "Alignment.Vertical",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "unbounded",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "wrapContentSize",
+      "displayName": "WrapContentSize",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "align",
+          "type": "ALIGNMENT",
+          "rawKotlinType": "Alignment",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "unbounded",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    },
+    {
+      "id": "wrapContentWidth",
+      "displayName": "WrapContentWidth",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "STANDARD",
+      "applicableScopes": [
+        "ANY"
+      ],
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "parameters": [
+        {
+          "name": "align",
+          "type": "ALIGNMENT",
+          "rawKotlinType": "Alignment.Horizontal",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "unbounded",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": []
+    }
+  ]
+}
