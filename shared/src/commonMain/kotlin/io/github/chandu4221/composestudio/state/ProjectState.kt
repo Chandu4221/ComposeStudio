@@ -136,4 +136,20 @@ data class ProjectState(
      */
     val selectedNode: ComponentNode?
         get() = selectedNodeId?.let { rootNode?.findNode(it) }
+
+    /**
+     * Resolves the receiver scope for [targetId] based on its immediate parent container.
+     * Returns "COLUMN", "ROW", "BOX", "LAZY_ITEM", or null.
+     */
+    fun getParentScope(targetId: String): String? {
+        val parentInfo = rootNode?.findParent(targetId) ?: return null
+        val (parentNode, _) = parentInfo
+        return when (parentNode.catalogId) {
+            "Column" -> "COLUMN"
+            "Row" -> "ROW"
+            "Box" -> "BOX"
+            "LazyColumn", "LazyRow" -> "LAZY_ITEM"
+            else -> null
+        }
+    }
 }

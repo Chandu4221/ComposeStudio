@@ -66,4 +66,16 @@ object CatalogRepository {
             it.category.contains(trimmed, ignoreCase = true)
         }
     }
+
+    /**
+     * Returns modifiers applicable for the given parent scope.
+     * Includes all 'ANY' modifiers plus modifiers matching [parentScope] (e.g. 'COLUMN', 'ROW', 'BOX').
+     */
+    suspend fun getApplicableModifiers(parentScope: String?): List<ModifierDefinition> {
+        val catalog = getModifierCatalog()
+        return catalog.modifiers.filter { modifier ->
+            "ANY" in modifier.applicableScopes ||
+            (parentScope != null && parentScope in modifier.applicableScopes)
+        }
+    }
 }
