@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,8 +22,17 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.BatteryFull
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Wifi
+import androidx.compose.material3.IconButton
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -218,25 +228,114 @@ private fun RenderNode(
 
         "TopAppBar", "CenterAlignedTopAppBar" -> {
             val titleText = (node.properties["title"] as? JsonPrimitive)?.content ?: "App Bar"
-            Box(
+            val titleAlign = (node.properties["titleAlign"] as? JsonPrimitive)?.content
+                ?: if (node.catalogId == "CenterAlignedTopAppBar") "Center" else "Start"
+            val navIconName = (node.properties["navIcon"] as? JsonPrimitive)?.content ?: "Back"
+            val action1Name = (node.properties["action1"] as? JsonPrimitive)?.content ?: "None"
+            val action2Name = (node.properties["action2"] as? JsonPrimitive)?.content ?: "More"
+            val colorSchemeName = (node.properties["containerColor"] as? JsonPrimitive)?.content ?: "Surface"
+
+            val barColor = when (colorSchemeName) {
+                "PrimaryContainer" -> MaterialTheme.colorScheme.primaryContainer
+                "SurfaceVariant" -> MaterialTheme.colorScheme.surfaceVariant
+                else -> MaterialTheme.colorScheme.surface
+            }
+
+            val navIconVector = when (navIconName) {
+                "Back" -> Icons.AutoMirrored.Filled.ArrowBack
+                "Menu" -> Icons.Default.Menu
+                "Close" -> Icons.Default.Close
+                else -> null
+            }
+
+            fun resolveActionIcon(name: String): ImageVector? = when (name) {
+                "Search" -> Icons.Default.Search
+                "Share" -> Icons.Default.Share
+                "Favorite" -> Icons.Default.Favorite
+                "More" -> Icons.Default.MoreVert
+                "Settings" -> Icons.Default.Settings
+                "Notifications" -> Icons.Default.Notifications
+                else -> null
+            }
+
+            Surface(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .selectableWrapper(node.id, isSelected, onSelectNode)
+                    .selectableWrapper(node.id, isSelected, onSelectNode),
+                color = barColor
             ) {
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 8.dp),
+                        .padding(horizontal = 4.dp, vertical = 6.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    StudioIcon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = MaterialTheme.colorScheme.onSurface)
-                    Text(
-                        text = titleText,
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
-                    StudioIcon(Icons.Default.MoreVert, "More", tint = MaterialTheme.colorScheme.onSurface)
+                    // Leading Slot: navigationIcon
+                    Row(
+                        modifier = Modifier.width(48.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        val navChildren = node.slots["navigationIcon"].orEmpty()
+                        if (navChildren.isNotEmpty()) {
+                            navChildren.forEach { child ->
+                                RenderNode(child, selectedNodeId, onSelectNode)
+                            }
+                        } else if (navIconVector != null) {
+                            IconButton(onClick = { onSelectNode(node.id) }, modifier = Modifier.size(40.dp)) {
+                                StudioIcon(navIconVector, navIconName, tint = MaterialTheme.colorScheme.onSurface)
+                            }
+                        }
+                    }
+
+                    // Center / Title Slot: title
+                    Box(
+                        modifier = Modifier.weight(1f),
+                        contentAlignment = if (titleAlign == "Center") Alignment.Center else Alignment.CenterStart
+                    ) {
+                        val titleChildren = node.slots["title"].orEmpty()
+                        if (titleChildren.isNotEmpty()) {
+                            titleChildren.forEach { child ->
+                                RenderNode(child, selectedNodeId, onSelectNode)
+                            }
+                        } else {
+                            Text(
+                                text = titleText,
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.SemiBold,
+                                color = MaterialTheme.colorScheme.onSurface,
+                                maxLines = 1
+                            )
+                        }
+                    }
+
+                    // Trailing Slot: actions
+                    Row(
+                        modifier = Modifier.widthIn(min = 48.dp),
+                        horizontalArrangement = Arrangement.End,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        val actionChildren = node.slots["actions"].orEmpty()
+                        if (actionChildren.isNotEmpty()) {
+                            actionChildren.forEach { child ->
+                                RenderNode(child, selectedNodeId, onSelectNode)
+                            }
+                        } else {
+                            val act1 = resolveActionIcon(action1Name)
+                            val act2 = resolveActionIcon(action2Name)
+
+                            if (act1 != null) {
+                                IconButton(onClick = { onSelectNode(node.id) }, modifier = Modifier.size(36.dp)) {
+                                    StudioIcon(act1, action1Name, tint = MaterialTheme.colorScheme.onSurface)
+                                }
+                            }
+                            if (act2 != null) {
+                                IconButton(onClick = { onSelectNode(node.id) }, modifier = Modifier.size(36.dp)) {
+                                    StudioIcon(act2, action2Name, tint = MaterialTheme.colorScheme.onSurface)
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

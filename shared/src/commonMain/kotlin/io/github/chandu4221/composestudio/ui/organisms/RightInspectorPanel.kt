@@ -553,7 +553,74 @@ private fun ComponentSpecificParameters(
 
         "TopAppBar", "CenterAlignedTopAppBar" -> {
             val title = (node.properties["title"] as? JsonPrimitive)?.content ?: "App Bar"
-            ParameterTextField("Title Text", title) { onUpdateProperty("title", JsonPrimitive(it)) }
+            val titleAlign = (node.properties["titleAlign"] as? JsonPrimitive)?.content
+                ?: if (node.catalogId == "CenterAlignedTopAppBar") "Center" else "Start"
+            val navIcon = (node.properties["navIcon"] as? JsonPrimitive)?.content ?: "Back"
+            val action1 = (node.properties["action1"] as? JsonPrimitive)?.content ?: "None"
+            val action2 = (node.properties["action2"] as? JsonPrimitive)?.content ?: "More"
+            val containerColor = (node.properties["containerColor"] as? JsonPrimitive)?.content ?: "Surface"
+
+            ParameterTextField("Title Text (title slot)", title) { onUpdateProperty("title", JsonPrimitive(it)) }
+
+            // Title Alignment
+            Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Text("Title Slot Alignment", style = MaterialTheme.typography.labelMedium)
+                val aligns = listOf("Start", "Center")
+                SegmentedControl(
+                    options = aligns,
+                    selectedIndex = aligns.indexOf(titleAlign).coerceAtLeast(0),
+                    onSelect = { onUpdateProperty("titleAlign", JsonPrimitive(aligns[it])) },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+
+            // Navigation Icon Slot (Leading)
+            Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Text("Navigation Icon (Leading Slot)", style = MaterialTheme.typography.labelMedium)
+                val navIcons = listOf("Back", "Menu", "Close", "None")
+                SegmentedControl(
+                    options = navIcons,
+                    selectedIndex = navIcons.indexOf(navIcon).coerceAtLeast(0),
+                    onSelect = { onUpdateProperty("navIcon", JsonPrimitive(navIcons[it])) },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+
+            // Actions Slot 1
+            Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Text("Action 1 (Trailing Slot)", style = MaterialTheme.typography.labelMedium)
+                val actionOptions = listOf("Search", "Share", "Favorite", "None")
+                SegmentedControl(
+                    options = actionOptions,
+                    selectedIndex = actionOptions.indexOf(action1).coerceAtLeast(0),
+                    onSelect = { onUpdateProperty("action1", JsonPrimitive(actionOptions[it])) },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+
+            // Actions Slot 2
+            Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Text("Action 2 (Trailing Slot)", style = MaterialTheme.typography.labelMedium)
+                val actionOptions = listOf("More", "Settings", "Notifications", "None")
+                SegmentedControl(
+                    options = actionOptions,
+                    selectedIndex = actionOptions.indexOf(action2).coerceAtLeast(0),
+                    onSelect = { onUpdateProperty("action2", JsonPrimitive(actionOptions[it])) },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+
+            // Container Color
+            Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Text("App Bar Color", style = MaterialTheme.typography.labelMedium)
+                val colors = listOf("Surface", "PrimaryContainer", "SurfaceVariant")
+                SegmentedControl(
+                    options = colors,
+                    selectedIndex = colors.indexOf(containerColor).coerceAtLeast(0),
+                    onSelect = { onUpdateProperty("containerColor", JsonPrimitive(colors[it])) },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
         }
 
         "HorizontalDivider", "VerticalDivider" -> {
