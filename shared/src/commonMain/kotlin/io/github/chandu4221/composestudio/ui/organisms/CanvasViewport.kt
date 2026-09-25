@@ -17,11 +17,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.chandu4221.composestudio.theme.AppTheme
-import io.github.chandu4221.composestudio.ui.atoms.StudioBadge
 import io.github.chandu4221.composestudio.ui.atoms.StudioIcon
 
 /**
@@ -75,37 +73,12 @@ fun CanvasViewport(
             }
         }
 
-        // Center: Device Frame with guidelines and measurement badges
+        // Center: Device Frame
         Box(
             modifier = Modifier.align(Alignment.Center),
             contentAlignment = Alignment.Center
         ) {
             DeviceMockupFrame()
-
-            // Pink Alignment Guideline badges on sides
-            Box(
-                modifier = Modifier
-                    .align(Alignment.CenterStart)
-                    .padding(start = 8.dp)
-            ) {
-                StudioBadge(
-                    text = "16dp",
-                    containerColor = Color(0xFFF43F5E),
-                    contentColor = Color.White
-                )
-            }
-
-            Box(
-                modifier = Modifier
-                    .align(Alignment.CenterEnd)
-                    .padding(end = 8.dp)
-            ) {
-                StudioBadge(
-                    text = "16dp",
-                    containerColor = Color(0xFFF43F5E),
-                    contentColor = Color.White
-                )
-            }
         }
 
         // Bottom: Floating Action Toolbar
