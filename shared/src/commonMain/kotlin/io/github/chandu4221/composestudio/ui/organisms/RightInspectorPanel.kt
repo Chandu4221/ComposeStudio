@@ -30,6 +30,7 @@ import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.DeleteOutline
 import androidx.compose.material.icons.filled.Layers
 import androidx.compose.material.icons.filled.MoreHoriz
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
@@ -75,8 +76,11 @@ import kotlinx.serialization.json.JsonPrimitive
 @Composable
 fun RightInspectorPanel(
     modifier: Modifier = Modifier,
+    isOpen: Boolean = true,
+    onToggle: () -> Unit = {},
     onClose: (() -> Unit)? = null
 ) {
+    val actualToggle = onClose ?: onToggle
     val store = LocalStudioStore.current
     val projectState by store.state.collectAsState()
     val selectedNode = projectState.selectedNode
@@ -90,108 +94,116 @@ fun RightInspectorPanel(
         modifier = modifier.fillMaxHeight(),
         color = MaterialTheme.colorScheme.surface
     ) {
-        BoxWithConstraints(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            val panelWidth = maxWidth
-            val minWidth = 320.dp
-            val isScrollable = panelWidth < minWidth
-
-            Box(
+        Column(modifier = Modifier.fillMaxSize()) {
+            // FIXED HEADER (48.dp)
+            Row(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .then(if (isScrollable) Modifier.horizontalScroll(rememberScrollState()) else Modifier)
+                    .fillMaxWidth()
+                    .height(48.dp)
+                    .padding(horizontal = 8.dp),
+                horizontalArrangement = if (isOpen) Arrangement.SpaceBetween else Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Column(
-                    modifier = Modifier
-                        .then(if (isScrollable) Modifier.width(minWidth) else Modifier.fillMaxWidth())
-                        .fillMaxHeight()
-                        .padding(16.dp)
-                        .verticalScroll(rememberScrollState()),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                if (selectedNode == null) {
-                    if (onClose != null) {
+                if (isOpen) {
+                    if (selectedNode == null) {
+                        Text(
+                            text = "Inspector",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                    } else {
+                        val parentScope = projectState.getParentScope(selectedNode.id)
                         Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
-                                text = "Inspector",
+                                text = selectedNode.catalogId,
                                 style = MaterialTheme.typography.titleMedium,
-                                fontWeight = FontWeight.Bold,
+                                fontWeight = FontWeight.SemiBold,
                                 color = MaterialTheme.colorScheme.onSurface
                             )
-                            SidebarTrigger(
-                                isOpen = true,
-                                onToggle = onClose,
-                                position = SidebarPosition.Right
-                            )
-                        }
-                    }
-
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = "Select a component on the canvas to inspect its parameters and modifiers.",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                } else {
-                    val parentScope = projectState.getParentScope(selectedNode.id)
-
-                    // 1. Header with component title, scope badge, and actions
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Column {
-                            Row(
-                                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Text(
-                                    text = selectedNode.catalogId,
-                                    style = MaterialTheme.typography.titleMedium,
-                                    fontWeight = FontWeight.SemiBold,
-                                    color = MaterialTheme.colorScheme.onSurface
+                            if (parentScope != null) {
+                                StudioBadge(
+                                    text = "${parentScope}Scope",
+                                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                                    contentColor = MaterialTheme.colorScheme.onSecondaryContainer
                                 )
-                                if (parentScope != null) {
-                                    StudioBadge(
-                                        text = "${parentScope}Scope",
-                                        containerColor = MaterialTheme.colorScheme.secondaryContainer,
-                                        contentColor = MaterialTheme.colorScheme.onSecondaryContainer
-                                    )
-                                }
                             }
                         }
+                    }
 
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(4.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        if (selectedNode != null) {
                             IconButton(
                                 onClick = { store.dispatch(StudioIntent.DeleteNode(selectedNode.id)) },
                                 modifier = Modifier.size(32.dp)
                             ) {
                                 StudioIcon(Icons.Default.DeleteOutline, "Delete", tint = MaterialTheme.colorScheme.error)
                             }
-                            if (onClose != null) {
-                                SidebarTrigger(
-                                    isOpen = true,
-                                    onToggle = onClose,
-                                    position = SidebarPosition.Right
-                                )
-                            }
                         }
+                        SidebarTrigger(
+                            isOpen = true,
+                            onToggle = actualToggle,
+                            position = SidebarPosition.Right
+                        )
                     }
+                } else {
+                    // Collapsed state: Fixed SidebarTrigger anchored at top right (inside the 48dp rail)
+                    SidebarTrigger(
+                        isOpen = false,
+                        onToggle = actualToggle,
+                        position = SidebarPosition.Right
+                    )
+                }
+            }
+
+            HorizontalDivider(
+                thickness = 1.dp,
+                color = MaterialTheme.colorScheme.outlineVariant
+            )
+
+            // BODY
+            if (isOpen) {
+                BoxWithConstraints(
+                    modifier = Modifier.weight(1f).fillMaxWidth()
+                ) {
+                    val panelWidth = maxWidth
+                    val minWidth = 320.dp
+                    val isScrollable = panelWidth < minWidth
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .then(if (isScrollable) Modifier.horizontalScroll(rememberScrollState()) else Modifier)
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .then(if (isScrollable) Modifier.width(minWidth) else Modifier.fillMaxWidth())
+                                .fillMaxHeight()
+                                .padding(16.dp)
+                                .verticalScroll(rememberScrollState()),
+                            verticalArrangement = Arrangement.spacedBy(16.dp)
+                        ) {
+                            if (selectedNode == null) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .weight(1f),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Text(
+                                        text = "Select a component on the canvas to inspect its parameters and modifiers.",
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                }
+                            } else {
+                                val parentScope = projectState.getParentScope(selectedNode.id)
 
                     // 2. Dynamic Component-Specific Parameters
                     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -298,6 +310,16 @@ fun RightInspectorPanel(
             }
         }
     }
+} else {
+    // Collapsed slim rail body (clean dark strip matching user's Image 2)
+    Box(
+        modifier = Modifier.weight(1f).fillMaxWidth(),
+        contentAlignment = Alignment.TopCenter
+    ) {
+        // Clean rail
+    }
+}
+}
 }
 }
 

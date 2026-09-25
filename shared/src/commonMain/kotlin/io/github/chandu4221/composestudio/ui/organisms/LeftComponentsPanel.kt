@@ -16,9 +16,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronRight
+import androidx.compose.material.icons.filled.Layers
+import androidx.compose.material.icons.filled.Widgets
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -32,6 +39,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -67,9 +75,12 @@ private val CATEGORY_ORDER = listOf("INPUT", "LAYOUT", "NAVIGATION", "SURFACE", 
 @Composable
 fun LeftComponentsPanel(
     modifier: Modifier = Modifier,
+    isOpen: Boolean = true,
+    onToggle: () -> Unit = {},
     onClose: (() -> Unit)? = null,
     onComponentSelected: (String) -> Unit = {}
 ) {
+    val actualToggle = onClose ?: onToggle
     val store = LocalStudioStore.current
     val projectState by store.state.collectAsState()
 
@@ -106,48 +117,68 @@ fun LeftComponentsPanel(
         modifier = modifier.fillMaxHeight(),
         color = MaterialTheme.colorScheme.surface
     ) {
-        BoxWithConstraints(
-            modifier = Modifier.fillMaxSize()
-        ) {
-            val panelWidth = maxWidth
-            val minWidth = 240.dp
-            val isScrollable = panelWidth < minWidth
-
-            Box(
+        Column(modifier = Modifier.fillMaxSize()) {
+            // FIXED HEADER (48.dp)
+            Row(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .then(if (isScrollable) Modifier.horizontalScroll(rememberScrollState()) else Modifier)
+                    .fillMaxWidth()
+                    .height(48.dp)
+                    .padding(horizontal = 8.dp),
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Column(
-                    modifier = Modifier
-                        .then(if (isScrollable) Modifier.width(minWidth) else Modifier.fillMaxWidth())
-                        .fillMaxHeight()
-                        .padding(16.dp)
-                        .verticalScroll(rememberScrollState()),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    // Header with Sidebar Trigger
-                    if (onClose != null) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.Start,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            SidebarTrigger(
-                                isOpen = true,
-                                onToggle = onClose,
-                                position = SidebarPosition.Left
-                            )
-                        }
-                    }
+                // Fixed SidebarTrigger anchored at top-left
+                SidebarTrigger(
+                    isOpen = isOpen,
+                    onToggle = actualToggle,
+                    position = SidebarPosition.Left
+                )
 
-                    // Tabs: Parts / Layers
-                    SegmentedControl(
-                        options = listOf("Parts", "Layers"),
-                        selectedIndex = selectedTab,
-                        onSelect = { selectedTab = it },
-                        modifier = Modifier.fillMaxWidth()
+                if (isOpen) {
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = "Components",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface
                     )
+                }
+            }
+
+            HorizontalDivider(
+                thickness = 1.dp,
+                color = MaterialTheme.colorScheme.outlineVariant
+            )
+
+            // BODY
+            if (isOpen) {
+                BoxWithConstraints(
+                    modifier = Modifier.weight(1f).fillMaxWidth()
+                ) {
+                    val panelWidth = maxWidth
+                    val minWidth = 240.dp
+                    val isScrollable = panelWidth < minWidth
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .then(if (isScrollable) Modifier.horizontalScroll(rememberScrollState()) else Modifier)
+                    ) {
+                        Column(
+                            modifier = Modifier
+                                .then(if (isScrollable) Modifier.width(minWidth) else Modifier.fillMaxWidth())
+                                .fillMaxHeight()
+                                .padding(16.dp)
+                                .verticalScroll(rememberScrollState()),
+                            verticalArrangement = Arrangement.spacedBy(16.dp)
+                        ) {
+                            // Tabs: Parts / Layers
+                            SegmentedControl(
+                                options = listOf("Parts", "Layers"),
+                                selectedIndex = selectedTab,
+                                onSelect = { selectedTab = it },
+                                modifier = Modifier.fillMaxWidth()
+                            )
 
                 if (selectedTab == 0) {
                     // Search
@@ -265,7 +296,48 @@ fun LeftComponentsPanel(
             }
         }
     }
-}
+} else {
+                // Collapsed slim rail body (Parts / Layers quick access)
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .padding(vertical = 8.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    IconButton(
+                        onClick = {
+                            selectedTab = 0
+                            actualToggle()
+                        },
+                        modifier = Modifier.size(36.dp)
+                    ) {
+                        StudioIcon(
+                            imageVector = Icons.Default.Widgets,
+                            contentDescription = "Parts",
+                            tint = if (selectedTab == 0) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                            size = 20.dp
+                        )
+                    }
+                    IconButton(
+                        onClick = {
+                            selectedTab = 1
+                            actualToggle()
+                        },
+                        modifier = Modifier.size(36.dp)
+                    ) {
+                        StudioIcon(
+                            imageVector = Icons.Default.Layers,
+                            contentDescription = "Layers",
+                            tint = if (selectedTab == 1) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                            size = 20.dp
+                        )
+                    }
+                }
+            }
+        }
+    }
 }
 
 /**
