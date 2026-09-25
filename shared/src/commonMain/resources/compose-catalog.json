@@ -1,0 +1,3137 @@
+{
+  "composeMultiplatformVersion": "1.7.3",
+  "material3Version": "1.3.1",
+  "totalCount": 43,
+  "components": [
+    {
+      "id": "AssistChip",
+      "displayName": "AssistChip",
+      "packageName": "androidx.compose.material3",
+      "category": "INPUT",
+      "tier": "STANDARD",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "shape",
+          "type": "SHAPE",
+          "rawKotlinType": "Shape",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "STYLING",
+          "rawKotlinType": "ChipColors",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "elevation",
+          "type": "STYLING",
+          "rawKotlinType": "ChipElevation?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "border",
+          "type": "STYLING",
+          "rawKotlinType": "BorderStroke?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onClick",
+          "signature": "() -> Unit",
+          "hasDefault": false
+        }
+      ],
+      "slots": [
+        {
+          "name": "label",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        },
+        {
+          "name": "leadingIcon",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        },
+        {
+          "name": "trailingIcon",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "Badge",
+      "displayName": "Badge",
+      "packageName": "androidx.compose.material3",
+      "category": "DISPLAY",
+      "tier": "STANDARD",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "containerColor",
+          "type": "COLOR",
+          "rawKotlinType": "Color",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "contentColor",
+          "type": "COLOR",
+          "rawKotlinType": "Color",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [],
+      "slots": [
+        {
+          "name": "content",
+          "receiverScope": "ROW",
+          "cardinality": "MULTIPLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "BadgedBox",
+      "displayName": "BadgedBox",
+      "packageName": "androidx.compose.material3",
+      "category": "DISPLAY",
+      "tier": "STANDARD",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [],
+      "callbacks": [],
+      "slots": [
+        {
+          "name": "badge",
+          "receiverScope": "BOX",
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        },
+        {
+          "name": "content",
+          "receiverScope": "BOX",
+          "cardinality": "MULTIPLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "Box",
+      "displayName": "Box",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "CORE",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "contentAlignment",
+          "type": "ALIGNMENT",
+          "rawKotlinType": "Alignment",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "propagateMinConstraints",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [],
+      "slots": [
+        {
+          "name": "content",
+          "receiverScope": "BOX",
+          "cardinality": "MULTIPLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "Button",
+      "displayName": "Button",
+      "packageName": "androidx.compose.material3",
+      "category": "INPUT",
+      "tier": "CORE",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "shape",
+          "type": "SHAPE",
+          "rawKotlinType": "Shape",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "STYLING",
+          "rawKotlinType": "ButtonColors",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "elevation",
+          "type": "STYLING",
+          "rawKotlinType": "ButtonElevation?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "border",
+          "type": "STYLING",
+          "rawKotlinType": "BorderStroke?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "contentPadding",
+          "type": "PADDING_VALUES",
+          "rawKotlinType": "PaddingValues",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onClick",
+          "signature": "() -> Unit",
+          "hasDefault": false
+        }
+      ],
+      "slots": [
+        {
+          "name": "content",
+          "receiverScope": "ROW",
+          "cardinality": "MULTIPLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "Card",
+      "displayName": "Card",
+      "packageName": "androidx.compose.material3",
+      "category": "SURFACE",
+      "tier": "CORE",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "shape",
+          "type": "SHAPE",
+          "rawKotlinType": "Shape",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "STYLING",
+          "rawKotlinType": "CardColors",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "elevation",
+          "type": "STYLING",
+          "rawKotlinType": "CardElevation",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "border",
+          "type": "STYLING",
+          "rawKotlinType": "BorderStroke?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [],
+      "slots": [
+        {
+          "name": "content",
+          "receiverScope": "COLUMN",
+          "cardinality": "MULTIPLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "CenterAlignedTopAppBar",
+      "displayName": "CenterAlignedTopAppBar",
+      "packageName": "androidx.compose.material3",
+      "category": "NAVIGATION",
+      "tier": "STANDARD",
+      "isExperimental": true,
+      "experimentalAnnotations": [
+        "androidx.compose.material3.ExperimentalMaterial3Api"
+      ],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "expandedHeight",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "windowInsets",
+          "type": "WINDOW_INSETS",
+          "rawKotlinType": "WindowInsets",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "STYLING",
+          "rawKotlinType": "TopAppBarColors",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "scrollBehavior",
+          "type": "SCROLL_SPEC",
+          "rawKotlinType": "TopAppBarScrollBehavior?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [],
+      "slots": [
+        {
+          "name": "title",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        },
+        {
+          "name": "navigationIcon",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        },
+        {
+          "name": "actions",
+          "receiverScope": "ROW",
+          "cardinality": "MULTIPLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "Checkbox",
+      "displayName": "Checkbox",
+      "packageName": "androidx.compose.material3",
+      "category": "INPUT",
+      "tier": "CORE",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "checked",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "STYLING",
+          "rawKotlinType": "CheckboxColors",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onCheckedChange",
+          "signature": "(Boolean) -> Unit",
+          "hasDefault": false
+        }
+      ],
+      "slots": []
+    },
+    {
+      "id": "CircularProgressIndicator",
+      "displayName": "CircularProgressIndicator",
+      "packageName": "androidx.compose.material3",
+      "category": "DISPLAY",
+      "tier": "STANDARD",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "color",
+          "type": "COLOR",
+          "rawKotlinType": "Color",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "strokeWidth",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "trackColor",
+          "type": "COLOR",
+          "rawKotlinType": "Color",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "strokeCap",
+          "type": "DRAWING_STYLE",
+          "rawKotlinType": "StrokeCap",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "gapSize",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "progress",
+          "signature": "() -> Float",
+          "hasDefault": false
+        }
+      ],
+      "slots": []
+    },
+    {
+      "id": "Column",
+      "displayName": "Column",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "CORE",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "verticalArrangement",
+          "type": "ARRANGEMENT",
+          "rawKotlinType": "Arrangement.Vertical",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "horizontalAlignment",
+          "type": "ALIGNMENT",
+          "rawKotlinType": "Alignment.Horizontal",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [],
+      "slots": [
+        {
+          "name": "content",
+          "receiverScope": "COLUMN",
+          "cardinality": "MULTIPLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "ElevatedButton",
+      "displayName": "ElevatedButton",
+      "packageName": "androidx.compose.material3",
+      "category": "INPUT",
+      "tier": "STANDARD",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "shape",
+          "type": "SHAPE",
+          "rawKotlinType": "Shape",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "STYLING",
+          "rawKotlinType": "ButtonColors",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "elevation",
+          "type": "STYLING",
+          "rawKotlinType": "ButtonElevation?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "border",
+          "type": "STYLING",
+          "rawKotlinType": "BorderStroke?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "contentPadding",
+          "type": "PADDING_VALUES",
+          "rawKotlinType": "PaddingValues",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onClick",
+          "signature": "() -> Unit",
+          "hasDefault": false
+        }
+      ],
+      "slots": [
+        {
+          "name": "content",
+          "receiverScope": "ROW",
+          "cardinality": "MULTIPLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "ElevatedCard",
+      "displayName": "ElevatedCard",
+      "packageName": "androidx.compose.material3",
+      "category": "SURFACE",
+      "tier": "STANDARD",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "shape",
+          "type": "SHAPE",
+          "rawKotlinType": "Shape",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "STYLING",
+          "rawKotlinType": "CardColors",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "elevation",
+          "type": "STYLING",
+          "rawKotlinType": "CardElevation",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onClick",
+          "signature": "() -> Unit",
+          "hasDefault": false
+        }
+      ],
+      "slots": [
+        {
+          "name": "content",
+          "receiverScope": "COLUMN",
+          "cardinality": "MULTIPLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "ExtendedFloatingActionButton",
+      "displayName": "ExtendedFloatingActionButton",
+      "packageName": "androidx.compose.material3",
+      "category": "INPUT",
+      "tier": "STANDARD",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "expanded",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "shape",
+          "type": "SHAPE",
+          "rawKotlinType": "Shape",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "containerColor",
+          "type": "COLOR",
+          "rawKotlinType": "Color",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "contentColor",
+          "type": "COLOR",
+          "rawKotlinType": "Color",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "elevation",
+          "type": "STYLING",
+          "rawKotlinType": "FloatingActionButtonElevation",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onClick",
+          "signature": "() -> Unit",
+          "hasDefault": false
+        }
+      ],
+      "slots": [
+        {
+          "name": "text",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        },
+        {
+          "name": "icon",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "FilledTonalButton",
+      "displayName": "FilledTonalButton",
+      "packageName": "androidx.compose.material3",
+      "category": "INPUT",
+      "tier": "STANDARD",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "shape",
+          "type": "SHAPE",
+          "rawKotlinType": "Shape",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "STYLING",
+          "rawKotlinType": "ButtonColors",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "elevation",
+          "type": "STYLING",
+          "rawKotlinType": "ButtonElevation?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "border",
+          "type": "STYLING",
+          "rawKotlinType": "BorderStroke?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "contentPadding",
+          "type": "PADDING_VALUES",
+          "rawKotlinType": "PaddingValues",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onClick",
+          "signature": "() -> Unit",
+          "hasDefault": false
+        }
+      ],
+      "slots": [
+        {
+          "name": "content",
+          "receiverScope": "ROW",
+          "cardinality": "MULTIPLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "FilterChip",
+      "displayName": "FilterChip",
+      "packageName": "androidx.compose.material3",
+      "category": "INPUT",
+      "tier": "STANDARD",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "selected",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "shape",
+          "type": "SHAPE",
+          "rawKotlinType": "Shape",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "STYLING",
+          "rawKotlinType": "SelectableChipColors",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "elevation",
+          "type": "STYLING",
+          "rawKotlinType": "SelectableChipElevation?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "border",
+          "type": "STYLING",
+          "rawKotlinType": "BorderStroke?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onClick",
+          "signature": "() -> Unit",
+          "hasDefault": false
+        }
+      ],
+      "slots": [
+        {
+          "name": "label",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        },
+        {
+          "name": "leadingIcon",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        },
+        {
+          "name": "trailingIcon",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "FloatingActionButton",
+      "displayName": "FloatingActionButton",
+      "packageName": "androidx.compose.material3",
+      "category": "INPUT",
+      "tier": "STANDARD",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "shape",
+          "type": "SHAPE",
+          "rawKotlinType": "Shape",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "containerColor",
+          "type": "COLOR",
+          "rawKotlinType": "Color",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "contentColor",
+          "type": "COLOR",
+          "rawKotlinType": "Color",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "elevation",
+          "type": "STYLING",
+          "rawKotlinType": "FloatingActionButtonElevation",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onClick",
+          "signature": "() -> Unit",
+          "hasDefault": false
+        }
+      ],
+      "slots": [
+        {
+          "name": "content",
+          "receiverScope": null,
+          "cardinality": "MULTIPLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "HorizontalDivider",
+      "displayName": "HorizontalDivider",
+      "packageName": "androidx.compose.material3",
+      "category": "DISPLAY",
+      "tier": "CORE",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "thickness",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "color",
+          "type": "COLOR",
+          "rawKotlinType": "Color",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [],
+      "slots": []
+    },
+    {
+      "id": "Icon",
+      "displayName": "Icon",
+      "packageName": "androidx.compose.material3",
+      "category": "DISPLAY",
+      "tier": "CORE",
+      "isExperimental": true,
+      "experimentalAnnotations": [
+        "androidx.compose.material3.ExperimentalMaterial3Api"
+      ],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "imageVector",
+          "type": "IMAGE_VECTOR",
+          "rawKotlinType": "ImageVector",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "contentDescription",
+          "type": "STRING",
+          "rawKotlinType": "String?",
+          "isNullable": true,
+          "hasDefault": false
+        },
+        {
+          "name": "tint",
+          "type": "COLOR",
+          "rawKotlinType": "Color",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [],
+      "slots": []
+    },
+    {
+      "id": "IconButton",
+      "displayName": "IconButton",
+      "packageName": "androidx.compose.material3",
+      "category": "INPUT",
+      "tier": "STANDARD",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "STYLING",
+          "rawKotlinType": "IconButtonColors",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onClick",
+          "signature": "() -> Unit",
+          "hasDefault": false
+        }
+      ],
+      "slots": [
+        {
+          "name": "content",
+          "receiverScope": null,
+          "cardinality": "MULTIPLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "Image",
+      "displayName": "Image",
+      "packageName": "androidx.compose.foundation",
+      "category": "DISPLAY",
+      "tier": "CORE",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "bitmap",
+          "type": "IMAGE_BITMAP",
+          "rawKotlinType": "ImageBitmap",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "contentDescription",
+          "type": "STRING",
+          "rawKotlinType": "String?",
+          "isNullable": true,
+          "hasDefault": false
+        },
+        {
+          "name": "alignment",
+          "type": "ALIGNMENT",
+          "rawKotlinType": "Alignment",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "contentScale",
+          "type": "CONTENT_SCALE",
+          "rawKotlinType": "ContentScale",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "alpha",
+          "type": "FLOAT",
+          "rawKotlinType": "Float",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "colorFilter",
+          "type": "COLOR_FILTER",
+          "rawKotlinType": "ColorFilter?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "filterQuality",
+          "type": "ENUM",
+          "rawKotlinType": "FilterQuality",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [],
+      "slots": []
+    },
+    {
+      "id": "InputChip",
+      "displayName": "InputChip",
+      "packageName": "androidx.compose.material3",
+      "category": "INPUT",
+      "tier": "STANDARD",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "selected",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "shape",
+          "type": "SHAPE",
+          "rawKotlinType": "Shape",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "STYLING",
+          "rawKotlinType": "SelectableChipColors",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "elevation",
+          "type": "STYLING",
+          "rawKotlinType": "SelectableChipElevation?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "border",
+          "type": "STYLING",
+          "rawKotlinType": "BorderStroke?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onClick",
+          "signature": "() -> Unit",
+          "hasDefault": false
+        }
+      ],
+      "slots": [
+        {
+          "name": "label",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        },
+        {
+          "name": "leadingIcon",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        },
+        {
+          "name": "avatar",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        },
+        {
+          "name": "trailingIcon",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "LazyColumn",
+      "displayName": "LazyColumn",
+      "packageName": "androidx.compose.foundation.lazy",
+      "category": "LAYOUT",
+      "tier": "STANDARD",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "state",
+          "type": "STATE",
+          "rawKotlinType": "LazyListState",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "contentPadding",
+          "type": "PADDING_VALUES",
+          "rawKotlinType": "PaddingValues",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "reverseLayout",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "verticalArrangement",
+          "type": "ARRANGEMENT",
+          "rawKotlinType": "Arrangement.Vertical",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "horizontalAlignment",
+          "type": "ALIGNMENT",
+          "rawKotlinType": "Alignment.Horizontal",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "flingBehavior",
+          "type": "FLING_BEHAVIOR",
+          "rawKotlinType": "FlingBehavior",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "userScrollEnabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [],
+      "slots": [
+        {
+          "name": "content",
+          "receiverScope": "LAZY_LIST",
+          "cardinality": "MULTIPLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "LazyRow",
+      "displayName": "LazyRow",
+      "packageName": "androidx.compose.foundation.lazy",
+      "category": "LAYOUT",
+      "tier": "STANDARD",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "state",
+          "type": "STATE",
+          "rawKotlinType": "LazyListState",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "contentPadding",
+          "type": "PADDING_VALUES",
+          "rawKotlinType": "PaddingValues",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "reverseLayout",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "horizontalArrangement",
+          "type": "ARRANGEMENT",
+          "rawKotlinType": "Arrangement.Horizontal",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "verticalAlignment",
+          "type": "ALIGNMENT",
+          "rawKotlinType": "Alignment.Vertical",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "flingBehavior",
+          "type": "FLING_BEHAVIOR",
+          "rawKotlinType": "FlingBehavior",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "userScrollEnabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [],
+      "slots": [
+        {
+          "name": "content",
+          "receiverScope": "LAZY_LIST",
+          "cardinality": "MULTIPLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "LinearProgressIndicator",
+      "displayName": "LinearProgressIndicator",
+      "packageName": "androidx.compose.material3",
+      "category": "DISPLAY",
+      "tier": "STANDARD",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "color",
+          "type": "COLOR",
+          "rawKotlinType": "Color",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "trackColor",
+          "type": "COLOR",
+          "rawKotlinType": "Color",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "strokeCap",
+          "type": "DRAWING_STYLE",
+          "rawKotlinType": "StrokeCap",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "gapSize",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "progress",
+          "signature": "() -> Float",
+          "hasDefault": false
+        },
+        {
+          "name": "drawStopIndicator",
+          "signature": "(DrawScope) -> Unit",
+          "hasDefault": true
+        }
+      ],
+      "slots": []
+    },
+    {
+      "id": "NavigationBar",
+      "displayName": "NavigationBar",
+      "packageName": "androidx.compose.material3",
+      "category": "NAVIGATION",
+      "tier": "STANDARD",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "containerColor",
+          "type": "COLOR",
+          "rawKotlinType": "Color",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "contentColor",
+          "type": "COLOR",
+          "rawKotlinType": "Color",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "tonalElevation",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "windowInsets",
+          "type": "WINDOW_INSETS",
+          "rawKotlinType": "WindowInsets",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [],
+      "slots": [
+        {
+          "name": "content",
+          "receiverScope": "ROW",
+          "cardinality": "MULTIPLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "NavigationBarItem",
+      "displayName": "NavigationBarItem",
+      "packageName": "androidx.compose.material3",
+      "category": "NAVIGATION",
+      "tier": "STANDARD",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": "ROW",
+      "parameters": [
+        {
+          "name": "selected",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "alwaysShowLabel",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "STYLING",
+          "rawKotlinType": "NavigationBarItemColors",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onClick",
+          "signature": "() -> Unit",
+          "hasDefault": false
+        }
+      ],
+      "slots": [
+        {
+          "name": "icon",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        },
+        {
+          "name": "label",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "NavigationRail",
+      "displayName": "NavigationRail",
+      "packageName": "androidx.compose.material3",
+      "category": "NAVIGATION",
+      "tier": "SPECIALIZED",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "containerColor",
+          "type": "COLOR",
+          "rawKotlinType": "Color",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "contentColor",
+          "type": "COLOR",
+          "rawKotlinType": "Color",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "windowInsets",
+          "type": "WINDOW_INSETS",
+          "rawKotlinType": "WindowInsets",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [],
+      "slots": [
+        {
+          "name": "header",
+          "receiverScope": "COLUMN",
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        },
+        {
+          "name": "content",
+          "receiverScope": "COLUMN",
+          "cardinality": "MULTIPLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "NavigationRailItem",
+      "displayName": "NavigationRailItem",
+      "packageName": "androidx.compose.material3",
+      "category": "NAVIGATION",
+      "tier": "STANDARD",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "selected",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "alwaysShowLabel",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "STYLING",
+          "rawKotlinType": "NavigationRailItemColors",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onClick",
+          "signature": "() -> Unit",
+          "hasDefault": false
+        }
+      ],
+      "slots": [
+        {
+          "name": "icon",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        },
+        {
+          "name": "label",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "OutlinedButton",
+      "displayName": "OutlinedButton",
+      "packageName": "androidx.compose.material3",
+      "category": "INPUT",
+      "tier": "STANDARD",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "shape",
+          "type": "SHAPE",
+          "rawKotlinType": "Shape",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "STYLING",
+          "rawKotlinType": "ButtonColors",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "elevation",
+          "type": "STYLING",
+          "rawKotlinType": "ButtonElevation?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "border",
+          "type": "STYLING",
+          "rawKotlinType": "BorderStroke?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "contentPadding",
+          "type": "PADDING_VALUES",
+          "rawKotlinType": "PaddingValues",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onClick",
+          "signature": "() -> Unit",
+          "hasDefault": false
+        }
+      ],
+      "slots": [
+        {
+          "name": "content",
+          "receiverScope": "ROW",
+          "cardinality": "MULTIPLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "OutlinedCard",
+      "displayName": "OutlinedCard",
+      "packageName": "androidx.compose.material3",
+      "category": "SURFACE",
+      "tier": "STANDARD",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "shape",
+          "type": "SHAPE",
+          "rawKotlinType": "Shape",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "STYLING",
+          "rawKotlinType": "CardColors",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "elevation",
+          "type": "STYLING",
+          "rawKotlinType": "CardElevation",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "border",
+          "type": "STYLING",
+          "rawKotlinType": "BorderStroke",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onClick",
+          "signature": "() -> Unit",
+          "hasDefault": false
+        }
+      ],
+      "slots": [
+        {
+          "name": "content",
+          "receiverScope": "COLUMN",
+          "cardinality": "MULTIPLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "OutlinedTextField",
+      "displayName": "OutlinedTextField",
+      "packageName": "androidx.compose.material3",
+      "category": "INPUT",
+      "tier": "CORE",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "value",
+          "type": "STRING",
+          "rawKotlinType": "String",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "readOnly",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "textStyle",
+          "type": "STYLING",
+          "rawKotlinType": "TextStyle",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "isError",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "visualTransformation",
+          "type": "VISUAL_TRANSFORM",
+          "rawKotlinType": "VisualTransformation",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "keyboardOptions",
+          "type": "KEYBOARD",
+          "rawKotlinType": "KeyboardOptions",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "keyboardActions",
+          "type": "KEYBOARD",
+          "rawKotlinType": "KeyboardActions",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "singleLine",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "maxLines",
+          "type": "INT",
+          "rawKotlinType": "Int",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "minLines",
+          "type": "INT",
+          "rawKotlinType": "Int",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "shape",
+          "type": "SHAPE",
+          "rawKotlinType": "Shape",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "STYLING",
+          "rawKotlinType": "TextFieldColors",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onValueChange",
+          "signature": "(String) -> Unit",
+          "hasDefault": false
+        }
+      ],
+      "slots": [
+        {
+          "name": "label",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        },
+        {
+          "name": "placeholder",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        },
+        {
+          "name": "leadingIcon",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        },
+        {
+          "name": "trailingIcon",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        },
+        {
+          "name": "prefix",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        },
+        {
+          "name": "suffix",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        },
+        {
+          "name": "supportingText",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "RadioButton",
+      "displayName": "RadioButton",
+      "packageName": "androidx.compose.material3",
+      "category": "INPUT",
+      "tier": "STANDARD",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "selected",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "STYLING",
+          "rawKotlinType": "RadioButtonColors",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onClick",
+          "signature": "() -> Unit",
+          "hasDefault": false
+        }
+      ],
+      "slots": []
+    },
+    {
+      "id": "Row",
+      "displayName": "Row",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "CORE",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "horizontalArrangement",
+          "type": "ARRANGEMENT",
+          "rawKotlinType": "Arrangement.Horizontal",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "verticalAlignment",
+          "type": "ALIGNMENT",
+          "rawKotlinType": "Alignment.Vertical",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [],
+      "slots": [
+        {
+          "name": "content",
+          "receiverScope": "ROW",
+          "cardinality": "MULTIPLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "Scaffold",
+      "displayName": "Scaffold",
+      "packageName": "androidx.compose.material3",
+      "category": "SURFACE",
+      "tier": "CORE",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "floatingActionButtonPosition",
+          "type": "POSITION",
+          "rawKotlinType": "FabPosition",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "containerColor",
+          "type": "COLOR",
+          "rawKotlinType": "Color",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "contentColor",
+          "type": "COLOR",
+          "rawKotlinType": "Color",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "contentWindowInsets",
+          "type": "WINDOW_INSETS",
+          "rawKotlinType": "WindowInsets",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [],
+      "slots": [
+        {
+          "name": "topBar",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        },
+        {
+          "name": "bottomBar",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        },
+        {
+          "name": "snackbarHost",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        },
+        {
+          "name": "floatingActionButton",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        },
+        {
+          "name": "content",
+          "receiverScope": null,
+          "cardinality": "MULTIPLE",
+          "takesParameter": true,
+          "parameterName": "paddingValues",
+          "parameterType": "PaddingValues",
+          "hasDefault": false,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "Slider",
+      "displayName": "Slider",
+      "packageName": "androidx.compose.material3",
+      "category": "INPUT",
+      "tier": "CORE",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "value",
+          "type": "FLOAT",
+          "rawKotlinType": "Float",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "STYLING",
+          "rawKotlinType": "SliderColors",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "steps",
+          "type": "INT",
+          "rawKotlinType": "Int",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "valueRange",
+          "type": "RANGE",
+          "rawKotlinType": "ClosedFloatingPointRange<Float>",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onValueChange",
+          "signature": "(Float) -> Unit",
+          "hasDefault": false
+        },
+        {
+          "name": "onValueChangeFinished",
+          "signature": "() -> Unit",
+          "hasDefault": true
+        }
+      ],
+      "slots": [
+        {
+          "name": "thumb",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": true,
+          "parameterName": "sliderState",
+          "parameterType": "SliderState",
+          "hasDefault": true,
+          "isComposable": true
+        },
+        {
+          "name": "track",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": true,
+          "parameterName": "sliderState",
+          "parameterType": "SliderState",
+          "hasDefault": true,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "Spacer",
+      "displayName": "Spacer",
+      "packageName": "androidx.compose.foundation.layout",
+      "category": "LAYOUT",
+      "tier": "CORE",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [],
+      "callbacks": [],
+      "slots": []
+    },
+    {
+      "id": "SuggestionChip",
+      "displayName": "SuggestionChip",
+      "packageName": "androidx.compose.material3",
+      "category": "INPUT",
+      "tier": "STANDARD",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "shape",
+          "type": "SHAPE",
+          "rawKotlinType": "Shape",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "STYLING",
+          "rawKotlinType": "ChipColors",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "elevation",
+          "type": "STYLING",
+          "rawKotlinType": "ChipElevation?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "border",
+          "type": "STYLING",
+          "rawKotlinType": "BorderStroke?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onClick",
+          "signature": "() -> Unit",
+          "hasDefault": false
+        }
+      ],
+      "slots": [
+        {
+          "name": "label",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        },
+        {
+          "name": "icon",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "Switch",
+      "displayName": "Switch",
+      "packageName": "androidx.compose.material3",
+      "category": "INPUT",
+      "tier": "CORE",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "checked",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "STYLING",
+          "rawKotlinType": "SwitchColors",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onCheckedChange",
+          "signature": "(Boolean) -> Unit",
+          "hasDefault": false
+        }
+      ],
+      "slots": [
+        {
+          "name": "thumbContent",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "Text",
+      "displayName": "Text",
+      "packageName": "androidx.compose.material3",
+      "category": "DISPLAY",
+      "tier": "CORE",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "text",
+          "type": "STRING",
+          "rawKotlinType": "String",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "color",
+          "type": "COLOR",
+          "rawKotlinType": "Color",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "fontSize",
+          "type": "SP",
+          "rawKotlinType": "TextUnit",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "fontStyle",
+          "type": "STYLING",
+          "rawKotlinType": "FontStyle?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "fontWeight",
+          "type": "FONT",
+          "rawKotlinType": "FontWeight?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "fontFamily",
+          "type": "FONT",
+          "rawKotlinType": "FontFamily?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "letterSpacing",
+          "type": "SP",
+          "rawKotlinType": "TextUnit",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "textDecoration",
+          "type": "TEXT_STYLE",
+          "rawKotlinType": "TextDecoration?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "textAlign",
+          "type": "TEXT_STYLE",
+          "rawKotlinType": "TextAlign?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "lineHeight",
+          "type": "SP",
+          "rawKotlinType": "TextUnit",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "overflow",
+          "type": "TEXT_STYLE",
+          "rawKotlinType": "TextOverflow",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "softWrap",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "maxLines",
+          "type": "INT",
+          "rawKotlinType": "Int",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "minLines",
+          "type": "INT",
+          "rawKotlinType": "Int",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "style",
+          "type": "STYLING",
+          "rawKotlinType": "TextStyle",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onTextLayout",
+          "signature": "(TextLayoutResult) -> Unit",
+          "hasDefault": true
+        }
+      ],
+      "slots": []
+    },
+    {
+      "id": "TextButton",
+      "displayName": "TextButton",
+      "packageName": "androidx.compose.material3",
+      "category": "INPUT",
+      "tier": "STANDARD",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "shape",
+          "type": "SHAPE",
+          "rawKotlinType": "Shape",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "STYLING",
+          "rawKotlinType": "ButtonColors",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "elevation",
+          "type": "STYLING",
+          "rawKotlinType": "ButtonElevation?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "border",
+          "type": "STYLING",
+          "rawKotlinType": "BorderStroke?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "contentPadding",
+          "type": "PADDING_VALUES",
+          "rawKotlinType": "PaddingValues",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onClick",
+          "signature": "() -> Unit",
+          "hasDefault": false
+        }
+      ],
+      "slots": [
+        {
+          "name": "content",
+          "receiverScope": "ROW",
+          "cardinality": "MULTIPLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "TextField",
+      "displayName": "TextField",
+      "packageName": "androidx.compose.material3",
+      "category": "INPUT",
+      "tier": "CORE",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "value",
+          "type": "STRING",
+          "rawKotlinType": "String",
+          "isNullable": false,
+          "hasDefault": false
+        },
+        {
+          "name": "enabled",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "readOnly",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "textStyle",
+          "type": "STYLING",
+          "rawKotlinType": "TextStyle",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "isError",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "visualTransformation",
+          "type": "VISUAL_TRANSFORM",
+          "rawKotlinType": "VisualTransformation",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "keyboardOptions",
+          "type": "KEYBOARD",
+          "rawKotlinType": "KeyboardOptions",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "keyboardActions",
+          "type": "KEYBOARD",
+          "rawKotlinType": "KeyboardActions",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "singleLine",
+          "type": "BOOLEAN",
+          "rawKotlinType": "Boolean",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "maxLines",
+          "type": "INT",
+          "rawKotlinType": "Int",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "minLines",
+          "type": "INT",
+          "rawKotlinType": "Int",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "interactionSource",
+          "type": "INTERACTION",
+          "rawKotlinType": "MutableInteractionSource?",
+          "isNullable": true,
+          "hasDefault": true
+        },
+        {
+          "name": "shape",
+          "type": "SHAPE",
+          "rawKotlinType": "Shape",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "STYLING",
+          "rawKotlinType": "TextFieldColors",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [
+        {
+          "name": "onValueChange",
+          "signature": "(String) -> Unit",
+          "hasDefault": false
+        }
+      ],
+      "slots": [
+        {
+          "name": "label",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        },
+        {
+          "name": "placeholder",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        },
+        {
+          "name": "leadingIcon",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        },
+        {
+          "name": "trailingIcon",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        },
+        {
+          "name": "prefix",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        },
+        {
+          "name": "suffix",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        },
+        {
+          "name": "supportingText",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "TopAppBar",
+      "displayName": "TopAppBar",
+      "packageName": "androidx.compose.material3",
+      "category": "NAVIGATION",
+      "tier": "STANDARD",
+      "isExperimental": true,
+      "experimentalAnnotations": [
+        "androidx.compose.material3.ExperimentalMaterial3Api"
+      ],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "expandedHeight",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "windowInsets",
+          "type": "WINDOW_INSETS",
+          "rawKotlinType": "WindowInsets",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "colors",
+          "type": "STYLING",
+          "rawKotlinType": "TopAppBarColors",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "scrollBehavior",
+          "type": "SCROLL_SPEC",
+          "rawKotlinType": "TopAppBarScrollBehavior?",
+          "isNullable": true,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [],
+      "slots": [
+        {
+          "name": "title",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": false,
+          "isComposable": true
+        },
+        {
+          "name": "navigationIcon",
+          "receiverScope": null,
+          "cardinality": "SINGLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        },
+        {
+          "name": "actions",
+          "receiverScope": "ROW",
+          "cardinality": "MULTIPLE",
+          "takesParameter": false,
+          "parameterName": null,
+          "parameterType": null,
+          "hasDefault": true,
+          "isComposable": true
+        }
+      ]
+    },
+    {
+      "id": "VerticalDivider",
+      "displayName": "VerticalDivider",
+      "packageName": "androidx.compose.material3",
+      "category": "DISPLAY",
+      "tier": "STANDARD",
+      "isExperimental": false,
+      "experimentalAnnotations": [],
+      "isDeprecated": false,
+      "deprecation": null,
+      "receiverScope": null,
+      "parameters": [
+        {
+          "name": "thickness",
+          "type": "DP",
+          "rawKotlinType": "Dp",
+          "isNullable": false,
+          "hasDefault": true
+        },
+        {
+          "name": "color",
+          "type": "COLOR",
+          "rawKotlinType": "Color",
+          "isNullable": false,
+          "hasDefault": true
+        }
+      ],
+      "callbacks": [],
+      "slots": []
+    }
+  ]
+}
