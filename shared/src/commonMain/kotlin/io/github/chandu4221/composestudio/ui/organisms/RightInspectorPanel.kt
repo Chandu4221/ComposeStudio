@@ -3,14 +3,17 @@ package io.github.chandu4221.composestudio.ui.organisms
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -81,20 +84,18 @@ fun RightInspectorPanel(
     var showAddModifierDialog by remember { mutableStateOf(false) }
 
     Surface(
-        modifier = modifier
-            .width(360.dp)
-            .fillMaxHeight(),
+        modifier = modifier.fillMaxHeight(),
         color = MaterialTheme.colorScheme.surface
     ) {
-        Row(modifier = Modifier.fillMaxHeight()) {
-            VerticalDivider(
-                modifier = Modifier.fillMaxHeight(),
-                thickness = 1.dp,
-                color = MaterialTheme.colorScheme.outlineVariant
-            )
+        BoxWithConstraints(
+            modifier = Modifier
+                .fillMaxSize()
+                .horizontalScroll(rememberScrollState())
+        ) {
+            val contentWidth = maxOf(maxWidth, 320.dp)
             Column(
                 modifier = Modifier
-                    .weight(1f)
+                    .width(contentWidth)
                     .fillMaxHeight()
                     .padding(16.dp)
                     .verticalScroll(rememberScrollState()),
@@ -602,8 +603,10 @@ private fun ComponentSpecificParameters(
             Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 Text("Action 2 (Trailing Slot)", style = MaterialTheme.typography.labelMedium)
                 val actionOptions = listOf("More", "Settings", "Notifications", "None")
+                val actionLabels = listOf("More", "Settings", "Alerts", "None")
                 SegmentedControl(
                     options = actionOptions,
+                    labels = actionLabels,
                     selectedIndex = actionOptions.indexOf(action2).coerceAtLeast(0),
                     onSelect = { onUpdateProperty("action2", JsonPrimitive(actionOptions[it])) },
                     modifier = Modifier.fillMaxWidth()
@@ -614,8 +617,10 @@ private fun ComponentSpecificParameters(
             Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 Text("App Bar Color", style = MaterialTheme.typography.labelMedium)
                 val colors = listOf("Surface", "PrimaryContainer", "SurfaceVariant")
+                val colorLabels = listOf("Surface", "Primary", "Variant")
                 SegmentedControl(
                     options = colors,
+                    labels = colorLabels,
                     selectedIndex = colors.indexOf(containerColor).coerceAtLeast(0),
                     onSelect = { onUpdateProperty("containerColor", JsonPrimitive(colors[it])) },
                     modifier = Modifier.fillMaxWidth()

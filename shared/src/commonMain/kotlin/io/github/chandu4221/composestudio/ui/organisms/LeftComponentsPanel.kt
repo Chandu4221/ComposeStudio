@@ -3,11 +3,14 @@ package io.github.chandu4221.composestudio.ui.organisms
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -97,15 +100,18 @@ fun LeftComponentsPanel(
     }
 
     Surface(
-        modifier = modifier
-            .width(260.dp)
-            .fillMaxHeight(),
+        modifier = modifier.fillMaxHeight(),
         color = MaterialTheme.colorScheme.surface
     ) {
-        Row(modifier = Modifier.fillMaxHeight()) {
+        BoxWithConstraints(
+            modifier = Modifier
+                .fillMaxSize()
+                .horizontalScroll(rememberScrollState())
+        ) {
+            val contentWidth = maxOf(maxWidth, 240.dp)
             Column(
                 modifier = Modifier
-                    .weight(1f)
+                    .width(contentWidth)
                     .fillMaxHeight()
                     .padding(16.dp)
                     .verticalScroll(rememberScrollState()),
@@ -233,12 +239,6 @@ fun LeftComponentsPanel(
                     }
                 }
             }
-
-            VerticalDivider(
-                modifier = Modifier.fillMaxHeight(),
-                thickness = 1.dp,
-                color = MaterialTheme.colorScheme.outlineVariant
-            )
         }
     }
 }

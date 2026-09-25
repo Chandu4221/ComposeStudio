@@ -22,12 +22,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import io.github.chandu4221.composestudio.theme.AppTheme
 
 /**
  * Standardized SegmentedControl molecule with consistent border, separators, and polished active pill.
+ * Responsive padding and typography based on item count to avoid text wrapping.
  */
 @Composable
 fun SegmentedControl(
@@ -35,9 +37,20 @@ fun SegmentedControl(
     selectedIndex: Int,
     onSelect: (Int) -> Unit,
     modifier: Modifier = Modifier,
+    labels: List<String> = options,
     equalWidth: Boolean = true,
     shape: Shape = MaterialTheme.shapes.small
 ) {
+    val hPadding = when {
+        options.size >= 4 -> 4.dp
+        options.size == 3 -> 6.dp
+        else -> 10.dp
+    }
+    val typography = when {
+        options.size >= 4 -> MaterialTheme.typography.labelSmall
+        else -> MaterialTheme.typography.labelMedium
+    }
+
     Row(
         modifier = modifier
             .border(
@@ -53,6 +66,7 @@ fun SegmentedControl(
     ) {
         options.forEachIndexed { index, option ->
             val isSelected = index == selectedIndex
+            val labelText = labels.getOrElse(index) { option }
 
             // Vertical separator between adjacent unselected items
             if (index > 0 && index != selectedIndex && index - 1 != selectedIndex) {
@@ -78,15 +92,18 @@ fun SegmentedControl(
                         role = androidx.compose.ui.semantics.Role.Tab,
                         onClick = { onSelect(index) }
                     )
-                    .padding(horizontal = 12.dp, vertical = 6.dp),
+                    .padding(horizontal = hPadding, vertical = 6.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = option,
-                    style = MaterialTheme.typography.labelMedium,
+                    text = labelText,
+                    style = typography,
                     fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal,
                     color = if (isSelected) MaterialTheme.colorScheme.onPrimary
-                    else MaterialTheme.colorScheme.onSurfaceVariant
+                    else MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    softWrap = false
                 )
             }
         }

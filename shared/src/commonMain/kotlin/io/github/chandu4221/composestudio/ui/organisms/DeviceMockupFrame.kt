@@ -254,7 +254,7 @@ private fun RenderNode(
                 "Favorite" -> Icons.Default.Favorite
                 "More" -> Icons.Default.MoreVert
                 "Settings" -> Icons.Default.Settings
-                "Notifications" -> Icons.Default.Notifications
+                "Notifications", "Alerts" -> Icons.Default.Notifications
                 else -> null
             }
 
