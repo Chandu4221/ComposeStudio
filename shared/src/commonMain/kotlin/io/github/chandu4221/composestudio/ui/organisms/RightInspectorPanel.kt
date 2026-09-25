@@ -75,7 +75,6 @@ fun RightInspectorPanel(
     val projectState by store.state.collectAsState()
     val selectedNode = projectState.selectedNode
 
-    var selectedTab by remember { mutableStateOf(0) }
     var paramsExpanded by remember { mutableStateOf(true) }
     var scopeExpanded by remember { mutableStateOf(true) }
     var modifiersExpanded by remember { mutableStateOf(true) }
@@ -154,15 +153,7 @@ fun RightInspectorPanel(
                         }
                     }
 
-                    // 2. Mode Tabs: Design / Trigger / Semantics
-                    SegmentedControl(
-                        options = listOf("Design", "Trigger", "Semantics"),
-                        selectedIndex = selectedTab,
-                        onSelect = { selectedTab = it },
-                        modifier = Modifier.fillMaxWidth()
-                    )
-
-                    // 3. Dynamic Component-Specific Parameters
+                    // 2. Dynamic Component-Specific Parameters
                     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                         AccordionHeader(
                             title = "Component Parameters",
