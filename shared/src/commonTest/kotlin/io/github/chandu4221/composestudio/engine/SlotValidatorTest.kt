@@ -177,4 +177,79 @@ class SlotValidatorTest {
         )
         assertNull(resolved)
     }
+
+    @Test
+    fun chip_slots_validation() {
+        val chipDef = ComponentDefinition(id = "AssistChip", displayName = "AssistChip", category = "INPUT")
+        val chipNode = ComponentNode(catalogId = "AssistChip")
+        val textDef = findDef("Text")
+        val iconDef = findDef("Icon")
+        val cardDef = findDef("Card")
+
+        val fullCatalog = ComponentCatalog(components = catalog.components + chipDef)
+
+        // label slot allows Text
+        val labelResult = SlotValidator.validateDrop(chipNode, "label", textDef, fullCatalog)
+        assertIs<SlotValidationResult.Valid>(labelResult)
+        assertEquals("label", labelResult.slotName)
+
+        // label slot rejects Card
+        val invalidLabel = SlotValidator.validateDrop(chipNode, "label", cardDef, fullCatalog)
+        assertIs<SlotValidationResult.Rejected>(invalidLabel)
+
+        // leadingIcon allows Icon
+        val iconResult = SlotValidator.validateDrop(chipNode, "leadingIcon", iconDef, fullCatalog)
+        assertIs<SlotValidationResult.Valid>(iconResult)
+        assertEquals("leadingIcon", iconResult.slotName)
+    }
+
+    @Test
+    fun badged_box_slots_validation() {
+        val badgedBoxDef = ComponentDefinition(id = "BadgedBox", displayName = "BadgedBox", category = "DISPLAY")
+        val badgeDef = ComponentDefinition(id = "Badge", displayName = "Badge", category = "DISPLAY")
+        val badgedBoxNode = ComponentNode(catalogId = "BadgedBox")
+        val textDef = findDef("Text")
+        val fullCatalog = ComponentCatalog(components = catalog.components + listOf(badgedBoxDef, badgeDef))
+
+        // badge slot accepts Badge
+        val badgeResult = SlotValidator.validateDrop(badgedBoxNode, "badge", badgeDef, fullCatalog)
+        assertIs<SlotValidationResult.Valid>(badgeResult)
+        assertEquals("badge", badgeResult.slotName)
+
+        // badge slot rejects Text
+        val invalidBadge = SlotValidator.validateDrop(badgedBoxNode, "badge", textDef, fullCatalog)
+        assertIs<SlotValidationResult.Rejected>(invalidBadge)
+
+        // content slot accepts Text with BoxScope
+        val contentResult = SlotValidator.validateDrop(badgedBoxNode, "content", textDef, fullCatalog)
+        assertIs<SlotValidationResult.Valid>(contentResult)
+        assertEquals("BoxScope", contentResult.scopeReceiver)
+    }
+
+    @Test
+    fun text_field_slots_validation() {
+        val textFieldDef = ComponentDefinition(id = "TextField", displayName = "TextField", category = "INPUT")
+        val textFieldNode = ComponentNode(catalogId = "TextField")
+        val textDef = findDef("Text")
+        val iconDef = findDef("Icon")
+        val fullCatalog = ComponentCatalog(components = catalog.components + textFieldDef)
+
+        val placeholderResult = SlotValidator.validateDrop(textFieldNode, "placeholder", textDef, fullCatalog)
+        assertIs<SlotValidationResult.Valid>(placeholderResult)
+
+        val leadingIconResult = SlotValidator.validateDrop(textFieldNode, "leadingIcon", iconDef, fullCatalog)
+        assertIs<SlotValidationResult.Valid>(leadingIconResult)
+    }
+
+    @Test
+    fun leaf_components_declare_zero_slots() {
+        val leafIds = listOf(
+            "Checkbox", "CircularProgressIndicator", "HorizontalDivider", "Icon",
+            "Image", "LinearProgressIndicator", "RadioButton", "Spacer", "Text", "VerticalDivider"
+        )
+        for (leafId in leafIds) {
+            val def = ComponentDefinition(id = leafId, displayName = leafId, category = "DISPLAY")
+            assertTrue(def.slotDefinitions.isEmpty(), "Component '$leafId' should declare 0 slots")
+        }
+    }
 }

@@ -156,7 +156,7 @@ fun resolveAtomicCategory(id: String, category: String): AtomicCategory {
  */
 fun resolveSlotDefinitions(id: String, existingSlots: List<ComponentSlot>): List<SlotDefinition> {
     return when (id) {
-        "Scaffold" -> listOf(
+        "Scaffold", "BottomSheetScaffold" -> listOf(
             SlotDefinition(
                 name = "topBar",
                 allowedCategories = listOf(AtomicCategory.ORGANISM),
@@ -220,6 +220,21 @@ fun resolveSlotDefinitions(id: String, existingSlots: List<ComponentSlot>): List
             )
         )
 
+        "NavigationBarItem", "NavigationRailItem" -> listOf(
+            SlotDefinition(
+                name = "icon",
+                allowedCategories = listOf(AtomicCategory.ATOM, AtomicCategory.MOLECULE),
+                allowedCatalogIds = listOf("Icon", "BadgedBox", "Badge"),
+                cardinality = SlotCardinality.SINGLE
+            ),
+            SlotDefinition(
+                name = "label",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("Text"),
+                cardinality = SlotCardinality.SINGLE
+            )
+        )
+
         "NavigationRail" -> listOf(
             SlotDefinition(
                 name = "header",
@@ -255,6 +270,117 @@ fun resolveSlotDefinitions(id: String, existingSlots: List<ComponentSlot>): List
             )
         )
 
+        "FloatingActionButton", "SmallFloatingActionButton", "LargeFloatingActionButton" -> listOf(
+            SlotDefinition(
+                name = "content",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("Icon", "Text"),
+                cardinality = SlotCardinality.SINGLE
+            )
+        )
+
+        "ExtendedFloatingActionButton" -> listOf(
+            SlotDefinition(
+                name = "text",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("Text"),
+                cardinality = SlotCardinality.SINGLE
+            ),
+            SlotDefinition(
+                name = "icon",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("Icon"),
+                cardinality = SlotCardinality.SINGLE
+            )
+        )
+
+        "AssistChip", "FilterChip" -> listOf(
+            SlotDefinition(
+                name = "label",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("Text"),
+                cardinality = SlotCardinality.SINGLE
+            ),
+            SlotDefinition(
+                name = "leadingIcon",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("Icon"),
+                cardinality = SlotCardinality.SINGLE
+            ),
+            SlotDefinition(
+                name = "trailingIcon",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("Icon"),
+                cardinality = SlotCardinality.SINGLE
+            )
+        )
+
+        "InputChip" -> listOf(
+            SlotDefinition(
+                name = "label",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("Text"),
+                cardinality = SlotCardinality.SINGLE
+            ),
+            SlotDefinition(
+                name = "leadingIcon",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("Icon"),
+                cardinality = SlotCardinality.SINGLE
+            ),
+            SlotDefinition(
+                name = "avatar",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("Icon", "Image"),
+                cardinality = SlotCardinality.SINGLE
+            ),
+            SlotDefinition(
+                name = "trailingIcon",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("Icon"),
+                cardinality = SlotCardinality.SINGLE
+            )
+        )
+
+        "SuggestionChip" -> listOf(
+            SlotDefinition(
+                name = "label",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("Text"),
+                cardinality = SlotCardinality.SINGLE
+            ),
+            SlotDefinition(
+                name = "icon",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("Icon"),
+                cardinality = SlotCardinality.SINGLE
+            )
+        )
+
+        "Badge" -> listOf(
+            SlotDefinition(
+                name = "content",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("Text"),
+                cardinality = SlotCardinality.SINGLE
+            )
+        )
+
+        "BadgedBox" -> listOf(
+            SlotDefinition(
+                name = "badge",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("Badge"),
+                cardinality = SlotCardinality.SINGLE
+            ),
+            SlotDefinition(
+                name = "content",
+                allowedCategories = listOf(AtomicCategory.ATOM, AtomicCategory.MOLECULE, AtomicCategory.ORGANISM),
+                scopeReceiver = "BoxScope",
+                cardinality = SlotCardinality.MULTIPLE
+            )
+        )
+
         "Column", "LazyColumn" -> listOf(
             SlotDefinition(
                 name = "content",
@@ -286,9 +412,81 @@ fun resolveSlotDefinitions(id: String, existingSlots: List<ComponentSlot>): List
             SlotDefinition(
                 name = "content",
                 allowedCategories = listOf(AtomicCategory.ATOM, AtomicCategory.MOLECULE, AtomicCategory.ORGANISM),
+                scopeReceiver = "ColumnScope",
                 cardinality = SlotCardinality.MULTIPLE
             )
         )
+
+        "TextField", "OutlinedTextField" -> listOf(
+            SlotDefinition(
+                name = "label",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("Text"),
+                cardinality = SlotCardinality.SINGLE
+            ),
+            SlotDefinition(
+                name = "placeholder",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("Text"),
+                cardinality = SlotCardinality.SINGLE
+            ),
+            SlotDefinition(
+                name = "leadingIcon",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("Icon", "IconButton"),
+                cardinality = SlotCardinality.SINGLE
+            ),
+            SlotDefinition(
+                name = "trailingIcon",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("Icon", "IconButton"),
+                cardinality = SlotCardinality.SINGLE
+            ),
+            SlotDefinition(
+                name = "prefix",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("Text"),
+                cardinality = SlotCardinality.SINGLE
+            ),
+            SlotDefinition(
+                name = "suffix",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("Text"),
+                cardinality = SlotCardinality.SINGLE
+            ),
+            SlotDefinition(
+                name = "supportingText",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("Text"),
+                cardinality = SlotCardinality.SINGLE
+            )
+        )
+
+        "Switch" -> listOf(
+            SlotDefinition(
+                name = "thumbContent",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("Icon"),
+                cardinality = SlotCardinality.SINGLE
+            )
+        )
+
+        "Slider" -> listOf(
+            SlotDefinition(
+                name = "thumb",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("Icon", "Box"),
+                cardinality = SlotCardinality.SINGLE
+            ),
+            SlotDefinition(
+                name = "track",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                cardinality = SlotCardinality.SINGLE
+            )
+        )
+
+        "Checkbox", "CircularProgressIndicator", "HorizontalDivider", "Icon", "Image",
+        "LinearProgressIndicator", "RadioButton", "Spacer", "Text", "VerticalDivider" -> emptyList()
 
         else -> {
             if (existingSlots.isEmpty()) emptyList()
