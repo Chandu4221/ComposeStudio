@@ -235,6 +235,10 @@ fun RightInspectorPanel(
                                 ComponentSlotsInspector(
                                     node = selectedNode,
                                     slotDefinitions = slotDefs,
+                                    selectedSlotName = projectState.selectedSlotName,
+                                    onSelectSlot = { slotName ->
+                                        store.dispatch(StudioIntent.SelectSlot(selectedNode.id, slotName))
+                                    },
                                     onSelectChildNode = { childId -> store.dispatch(StudioIntent.SelectNode(childId)) },
                                     onDeleteChildNode = { childId -> store.dispatch(StudioIntent.DeleteNode(childId)) }
                                 )
@@ -1045,6 +1049,8 @@ private fun ParameterTextField(
 private fun ComponentSlotsInspector(
     node: ComponentNode,
     slotDefinitions: List<SlotDefinition>,
+    selectedSlotName: String? = null,
+    onSelectSlot: (String?) -> Unit = {},
     onSelectChildNode: (String) -> Unit,
     onDeleteChildNode: (String) -> Unit
 ) {
@@ -1055,6 +1061,7 @@ private fun ComponentSlotsInspector(
         slotDefinitions.forEach { slotDef ->
             val children = node.slots[slotDef.name].orEmpty()
             val isSingle = slotDef.cardinality == SlotCardinality.SINGLE
+            val isTargeted = selectedSlotName == slotDef.name
             val occupancyText = if (isSingle) {
                 if (children.isNotEmpty()) "1 / 1" else "0 / 1"
             } else {
@@ -1062,10 +1069,22 @@ private fun ComponentSlotsInspector(
             }
 
             Surface(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(MaterialTheme.shapes.small)
+                    .clickable(role = androidx.compose.ui.semantics.Role.Button) {
+                        onSelectSlot(if (isTargeted) null else slotDef.name)
+                    },
                 shape = MaterialTheme.shapes.small,
-                color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.35f),
-                border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
+                color = if (isTargeted) {
+                    MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.25f)
+                } else {
+                    MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.35f)
+                },
+                border = androidx.compose.foundation.BorderStroke(
+                    width = if (isTargeted) 1.5.dp else 1.dp,
+                    color = if (isTargeted) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
+                )
             ) {
                 Column(
                     modifier = Modifier.padding(10.dp),
@@ -1086,6 +1105,13 @@ private fun ComponentSlotsInspector(
                                 fontWeight = FontWeight.SemiBold,
                                 color = MaterialTheme.colorScheme.onSurface
                             )
+                            if (isTargeted) {
+                                StudioBadge(
+                                    text = "TARGETED",
+                                    containerColor = MaterialTheme.colorScheme.primary,
+                                    contentColor = MaterialTheme.colorScheme.onPrimary
+                                )
+                            }
                             if (slotDef.scopeReceiver != null) {
                                 StudioBadge(
                                     text = slotDef.scopeReceiver,

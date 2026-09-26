@@ -67,7 +67,17 @@ class StudioStore(
             }
 
             is StudioIntent.SelectNode -> {
-                currentState.copy(selectedNodeId = intent.nodeId)
+                currentState.copy(
+                    selectedNodeId = intent.nodeId,
+                    selectedSlotName = if (intent.nodeId == null) null else intent.slotName
+                )
+            }
+
+            is StudioIntent.SelectSlot -> {
+                currentState.copy(
+                    selectedNodeId = intent.nodeId,
+                    selectedSlotName = intent.slotName
+                )
             }
 
             is StudioIntent.UpdateProperty -> {
@@ -93,18 +103,20 @@ class StudioStore(
 
             is StudioIntent.DeleteNode -> {
                 if (currentState.rootNode?.id == intent.nodeId) {
-                    currentState.copy(rootNode = null, selectedNodeId = null)
+                    currentState.copy(rootNode = null, selectedNodeId = null, selectedSlotName = null)
                 } else {
                     val updatedRoot = currentState.rootNode?.removeNode(intent.nodeId)
+                    val isDeletedSelected = currentState.selectedNodeId == intent.nodeId
                     currentState.copy(
                         rootNode = updatedRoot,
-                        selectedNodeId = if (currentState.selectedNodeId == intent.nodeId) null else currentState.selectedNodeId
+                        selectedNodeId = if (isDeletedSelected) null else currentState.selectedNodeId,
+                        selectedSlotName = if (isDeletedSelected) null else currentState.selectedSlotName
                     )
                 }
             }
 
             is StudioIntent.SetRootNode -> {
-                currentState.copy(rootNode = intent.node, selectedNodeId = intent.node.id)
+                currentState.copy(rootNode = intent.node, selectedNodeId = intent.node.id, selectedSlotName = null)
             }
 
             is StudioIntent.ResetCanvas -> {
@@ -169,7 +181,8 @@ class StudioStore(
 
         return state.copy(
             rootNode = updatedRoot,
-            selectedNodeId = newNode.id
+            selectedNodeId = newNode.id,
+            selectedSlotName = null
         )
     }
 

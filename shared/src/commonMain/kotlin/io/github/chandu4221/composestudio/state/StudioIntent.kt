@@ -26,8 +26,20 @@ sealed interface StudioIntent {
 
     /**
      * Selects a component node in the canvas/inspector. Passing null clears the selection.
+     * Optionally targets a specific [slotName] on that component.
      */
-    data class SelectNode(val nodeId: String?) : StudioIntent
+    data class SelectNode(
+        val nodeId: String?,
+        val slotName: String? = null
+    ) : StudioIntent
+
+    /**
+     * Specifically targets or clears an active slot on a node for insertion.
+     */
+    data class SelectSlot(
+        val nodeId: String,
+        val slotName: String?
+    ) : StudioIntent
 
     /**
      * Updates or sets a property on a component node.

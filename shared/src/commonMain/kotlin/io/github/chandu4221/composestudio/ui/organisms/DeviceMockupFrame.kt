@@ -63,6 +63,7 @@ import androidx.compose.ui.unit.sp
 import io.github.chandu4221.composestudio.state.ComponentNode
 import io.github.chandu4221.composestudio.state.LocalStudioStore
 import io.github.chandu4221.composestudio.state.StudioIntent
+import io.github.chandu4221.composestudio.ui.atoms.StudioBadge
 import io.github.chandu4221.composestudio.theme.AppTheme
 import io.github.chandu4221.composestudio.ui.atoms.StudioIcon
 import kotlinx.serialization.json.JsonPrimitive
@@ -131,7 +132,9 @@ fun DeviceMockupFrame(
                     RenderNode(
                         node = root,
                         selectedNodeId = projectState.selectedNodeId,
-                        onSelectNode = { store.dispatch(StudioIntent.SelectNode(it)) }
+                        selectedSlotName = projectState.selectedSlotName,
+                        onSelectNode = { store.dispatch(StudioIntent.SelectNode(it)) },
+                        onSelectSlot = { nodeId, slotName -> store.dispatch(StudioIntent.SelectSlot(nodeId, slotName)) }
                     )
                 } else {
                     Box(
@@ -166,7 +169,9 @@ fun DeviceMockupFrame(
 private fun RenderNode(
     node: ComponentNode,
     selectedNodeId: String?,
-    onSelectNode: (String) -> Unit
+    selectedSlotName: String? = null,
+    onSelectNode: (String) -> Unit,
+    onSelectSlot: (String, String?) -> Unit
 ) {
     val isSelected = node.id == selectedNodeId
 
@@ -179,8 +184,16 @@ private fun RenderNode(
             ) {
                 // TopBar Slot (SINGLE cardinality)
                 val topBarNode = node.slots["topBar"]?.firstOrNull()
+                val isTopBarTargeted = isSelected && selectedSlotName == "topBar"
                 if (topBarNode != null) {
-                    RenderNode(topBarNode, selectedNodeId, onSelectNode)
+                    RenderNode(topBarNode, selectedNodeId, selectedSlotName, onSelectNode, onSelectSlot)
+                } else if (isSelected || isTopBarTargeted) {
+                    EmptySlotPlaceholder(
+                        slotName = "topBar",
+                        hint = "+ Slot: topBar (e.g. TopAppBar)",
+                        isSelected = isTopBarTargeted,
+                        onClick = { onSelectSlot(node.id, if (isTopBarTargeted) null else "topBar") }
+                    )
                 }
 
                 // Main Content Slot (MULTIPLE cardinality)
@@ -191,11 +204,13 @@ private fun RenderNode(
                         .verticalScroll(rememberScrollState())
                 ) {
                     val contentNodes = node.slots["content"].orEmpty()
+                    val isContentTargeted = isSelected && selectedSlotName == "content"
                     if (contentNodes.isEmpty()) {
                         EmptySlotPlaceholder(
                             slotName = "content",
                             hint = "Drop Column or Layout here",
-                            onClick = { onSelectNode(node.id) }
+                            isSelected = isContentTargeted,
+                            onClick = { onSelectSlot(node.id, if (isContentTargeted) null else "content") }
                         )
                     } else {
                         Column(
@@ -203,7 +218,7 @@ private fun RenderNode(
                             verticalArrangement = Arrangement.spacedBy(12.dp)
                         ) {
                             contentNodes.forEach { child ->
-                                RenderNode(child, selectedNodeId, onSelectNode)
+                                RenderNode(child, selectedNodeId, selectedSlotName, onSelectNode, onSelectSlot)
                             }
                         }
                     }
@@ -211,19 +226,40 @@ private fun RenderNode(
 
                 // FloatingActionButton Slot (SINGLE cardinality)
                 val fabNode = node.slots["floatingActionButton"]?.firstOrNull()
+                val isFabTargeted = isSelected && selectedSlotName == "floatingActionButton"
                 if (fabNode != null) {
                     Row(
                         modifier = Modifier.fillMaxWidth().padding(8.dp),
                         horizontalArrangement = Arrangement.End
                     ) {
-                        RenderNode(fabNode, selectedNodeId, onSelectNode)
+                        RenderNode(fabNode, selectedNodeId, selectedSlotName, onSelectNode, onSelectSlot)
+                    }
+                } else if (isSelected || isFabTargeted) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(8.dp),
+                        horizontalArrangement = Arrangement.End
+                    ) {
+                        EmptySlotPlaceholder(
+                            slotName = "floatingActionButton",
+                            hint = "+ Slot: FAB",
+                            isSelected = isFabTargeted,
+                            onClick = { onSelectSlot(node.id, if (isFabTargeted) null else "floatingActionButton") }
+                        )
                     }
                 }
 
                 // BottomBar Slot (SINGLE cardinality)
                 val bottomBarNode = node.slots["bottomBar"]?.firstOrNull()
+                val isBottomBarTargeted = isSelected && selectedSlotName == "bottomBar"
                 if (bottomBarNode != null) {
-                    RenderNode(bottomBarNode, selectedNodeId, onSelectNode)
+                    RenderNode(bottomBarNode, selectedNodeId, selectedSlotName, onSelectNode, onSelectSlot)
+                } else if (isSelected || isBottomBarTargeted) {
+                    EmptySlotPlaceholder(
+                        slotName = "bottomBar",
+                        hint = "+ Slot: bottomBar (e.g. NavigationBar)",
+                        isSelected = isBottomBarTargeted,
+                        onClick = { onSelectSlot(node.id, if (isBottomBarTargeted) null else "bottomBar") }
+                    )
                 }
             }
         }
@@ -279,10 +315,14 @@ private fun RenderNode(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         val navChild = node.slots["navigationIcon"]?.firstOrNull()
+                        val isNavTargeted = isSelected && selectedSlotName == "navigationIcon"
                         if (navChild != null) {
-                            RenderNode(navChild, selectedNodeId, onSelectNode)
+                            RenderNode(navChild, selectedNodeId, selectedSlotName, onSelectNode, onSelectSlot)
                         } else if (navIconVector != null) {
-                            IconButton(onClick = { onSelectNode(node.id) }, modifier = Modifier.size(40.dp)) {
+                            IconButton(
+                                onClick = { onSelectSlot(node.id, if (isNavTargeted) null else "navigationIcon") },
+                                modifier = Modifier.size(40.dp)
+                            ) {
                                 StudioIcon(navIconVector, navIconName, tint = MaterialTheme.colorScheme.onSurface)
                             }
                         }
@@ -294,15 +334,19 @@ private fun RenderNode(
                         contentAlignment = if (titleAlign == "Center") Alignment.Center else Alignment.CenterStart
                     ) {
                         val titleChild = node.slots["title"]?.firstOrNull()
+                        val isTitleTargeted = isSelected && selectedSlotName == "title"
                         if (titleChild != null) {
-                            RenderNode(titleChild, selectedNodeId, onSelectNode)
+                            RenderNode(titleChild, selectedNodeId, selectedSlotName, onSelectNode, onSelectSlot)
                         } else {
                             Text(
                                 text = titleText,
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.SemiBold,
                                 color = MaterialTheme.colorScheme.onSurface,
-                                maxLines = 1
+                                maxLines = 1,
+                                modifier = Modifier.clickable(role = androidx.compose.ui.semantics.Role.Button) {
+                                    onSelectSlot(node.id, if (isTitleTargeted) null else "title")
+                                }
                             )
                         }
                     }
@@ -314,21 +358,28 @@ private fun RenderNode(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         val actionChildren = node.slots["actions"].orEmpty()
+                        val isActionsTargeted = isSelected && selectedSlotName == "actions"
                         if (actionChildren.isNotEmpty()) {
                             actionChildren.forEach { child ->
-                                RenderNode(child, selectedNodeId, onSelectNode)
+                                RenderNode(child, selectedNodeId, selectedSlotName, onSelectNode, onSelectSlot)
                             }
                         } else {
                             val act1 = resolveActionIcon(action1Name)
                             val act2 = resolveActionIcon(action2Name)
 
                             if (act1 != null) {
-                                IconButton(onClick = { onSelectNode(node.id) }, modifier = Modifier.size(36.dp)) {
+                                IconButton(
+                                    onClick = { onSelectSlot(node.id, if (isActionsTargeted) null else "actions") },
+                                    modifier = Modifier.size(36.dp)
+                                ) {
                                     StudioIcon(act1, action1Name, tint = MaterialTheme.colorScheme.onSurface)
                                 }
                             }
                             if (act2 != null) {
-                                IconButton(onClick = { onSelectNode(node.id) }, modifier = Modifier.size(36.dp)) {
+                                IconButton(
+                                    onClick = { onSelectSlot(node.id, if (isActionsTargeted) null else "actions") },
+                                    modifier = Modifier.size(36.dp)
+                                ) {
                                     StudioIcon(act2, action2Name, tint = MaterialTheme.colorScheme.onSurface)
                                 }
                             }
@@ -363,16 +414,17 @@ private fun RenderNode(
                 horizontalAlignment = horizontalAlignment
             ) {
                 val children = node.slots["content"].orEmpty()
+                val isContentTargeted = isSelected && selectedSlotName == "content"
                 if (children.isEmpty()) {
-                    Text(
-                        text = "Empty Column",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        modifier = Modifier.padding(8.dp)
+                    EmptySlotPlaceholder(
+                        slotName = "content",
+                        hint = "+ Empty Column",
+                        isSelected = isContentTargeted,
+                        onClick = { onSelectSlot(node.id, if (isContentTargeted) null else "content") }
                     )
                 } else {
                     children.forEach { child ->
-                        RenderNode(child, selectedNodeId, onSelectNode)
+                        RenderNode(child, selectedNodeId, selectedSlotName, onSelectNode, onSelectSlot)
                     }
                 }
             }
@@ -402,8 +454,41 @@ private fun RenderNode(
                 verticalAlignment = verticalAlignment
             ) {
                 val children = node.slots["content"].orEmpty()
-                children.forEach { child ->
-                    RenderNode(child, selectedNodeId, onSelectNode)
+                val isContentTargeted = isSelected && selectedSlotName == "content"
+                if (children.isEmpty()) {
+                    EmptySlotPlaceholder(
+                        slotName = "content",
+                        hint = "+ Empty Row",
+                        isSelected = isContentTargeted,
+                        onClick = { onSelectSlot(node.id, if (isContentTargeted) null else "content") }
+                    )
+                } else {
+                    children.forEach { child ->
+                        RenderNode(child, selectedNodeId, selectedSlotName, onSelectNode, onSelectSlot)
+                    }
+                }
+            }
+        }
+
+        "Box" -> {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .selectableWrapper(node.id, isSelected, onSelectNode)
+            ) {
+                val children = node.slots["content"].orEmpty()
+                val isContentTargeted = isSelected && selectedSlotName == "content"
+                if (children.isEmpty()) {
+                    EmptySlotPlaceholder(
+                        slotName = "content",
+                        hint = "+ Empty Box",
+                        isSelected = isContentTargeted,
+                        onClick = { onSelectSlot(node.id, if (isContentTargeted) null else "content") }
+                    )
+                } else {
+                    children.forEach { child ->
+                        RenderNode(child, selectedNodeId, selectedSlotName, onSelectNode, onSelectSlot)
+                    }
                 }
             }
         }
@@ -419,15 +504,17 @@ private fun RenderNode(
             ) {
                 Column(modifier = Modifier.padding(12.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     val children = node.slots["content"].orEmpty()
+                    val isContentTargeted = isSelected && selectedSlotName == "content"
                     if (children.isEmpty()) {
-                        Text(
-                            text = "Card Content",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        EmptySlotPlaceholder(
+                            slotName = "content",
+                            hint = "+ Empty Card",
+                            isSelected = isContentTargeted,
+                            onClick = { onSelectSlot(node.id, if (isContentTargeted) null else "content") }
                         )
                     } else {
                         children.forEach { child ->
-                            RenderNode(child, selectedNodeId, onSelectNode)
+                            RenderNode(child, selectedNodeId, selectedSlotName, onSelectNode, onSelectSlot)
                         }
                     }
                 }
@@ -447,7 +534,7 @@ private fun RenderNode(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         contentChildren.forEach { child ->
-                            RenderNode(child, selectedNodeId, onSelectNode)
+                            RenderNode(child, selectedNodeId, selectedSlotName, onSelectNode, onSelectSlot)
                         }
                     }
                 } else {
@@ -514,7 +601,7 @@ private fun RenderNode(
                 ) {
                     val contentChild = node.slots["content"]?.firstOrNull()
                     if (contentChild != null) {
-                        RenderNode(contentChild, selectedNodeId, onSelectNode)
+                        RenderNode(contentChild, selectedNodeId, selectedSlotName, onSelectNode, onSelectSlot)
                     } else {
                         StudioIcon(Icons.Default.Add, "Add")
                     }
@@ -540,13 +627,13 @@ private fun RenderNode(
                     ) {
                         val iconNode = node.slots["icon"]?.firstOrNull()
                         if (iconNode != null) {
-                            RenderNode(iconNode, selectedNodeId, onSelectNode)
+                            RenderNode(iconNode, selectedNodeId, selectedSlotName, onSelectNode, onSelectSlot)
                         } else {
                             StudioIcon(Icons.Default.Add, "Icon")
                         }
                         val textNode = node.slots["text"]?.firstOrNull()
                         if (textNode != null) {
-                            RenderNode(textNode, selectedNodeId, onSelectNode)
+                            RenderNode(textNode, selectedNodeId, selectedSlotName, onSelectNode, onSelectSlot)
                         } else {
                             Text(
                                 text = (node.properties["text"] as? JsonPrimitive)?.content ?: "Action",
@@ -565,7 +652,7 @@ private fun RenderNode(
             ) {
                 val contentChild = node.slots["content"]?.firstOrNull()
                 if (contentChild != null) {
-                    RenderNode(contentChild, selectedNodeId, onSelectNode)
+                    RenderNode(contentChild, selectedNodeId, selectedSlotName, onSelectNode, onSelectSlot)
                 } else {
                     StudioIcon(Icons.Default.Add, "Icon")
                 }
@@ -585,11 +672,17 @@ private fun RenderNode(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     val items = node.slots["content"].orEmpty()
+                    val isContentTargeted = isSelected && selectedSlotName == "content"
                     if (items.isEmpty()) {
-                        EmptySlotPlaceholder("content", "Add NavigationBarItems") { onSelectNode(node.id) }
+                        EmptySlotPlaceholder(
+                            slotName = "content",
+                            hint = "+ Add NavigationBarItems",
+                            isSelected = isContentTargeted,
+                            onClick = { onSelectSlot(node.id, if (isContentTargeted) null else "content") }
+                        )
                     } else {
                         items.forEach { child ->
-                            RenderNode(child, selectedNodeId, onSelectNode)
+                            RenderNode(child, selectedNodeId, selectedSlotName, onSelectNode, onSelectSlot)
                         }
                     }
                 }
@@ -606,13 +699,13 @@ private fun RenderNode(
             ) {
                 val iconChild = node.slots["icon"]?.firstOrNull()
                 if (iconChild != null) {
-                    RenderNode(iconChild, selectedNodeId, onSelectNode)
+                    RenderNode(iconChild, selectedNodeId, selectedSlotName, onSelectNode, onSelectSlot)
                 } else {
                     StudioIcon(Icons.Default.Favorite, "Icon", size = 20.dp)
                 }
                 val labelChild = node.slots["label"]?.firstOrNull()
                 if (labelChild != null) {
-                    RenderNode(labelChild, selectedNodeId, onSelectNode)
+                    RenderNode(labelChild, selectedNodeId, selectedSlotName, onSelectNode, onSelectSlot)
                 } else {
                     Text("Item", style = MaterialTheme.typography.labelSmall)
                 }
@@ -622,11 +715,11 @@ private fun RenderNode(
         "BadgedBox" -> {
             Box(modifier = Modifier.selectableWrapper(node.id, isSelected, onSelectNode)) {
                 val contentChildren = node.slots["content"].orEmpty()
-                contentChildren.forEach { RenderNode(it, selectedNodeId, onSelectNode) }
+                contentChildren.forEach { RenderNode(it, selectedNodeId, selectedSlotName, onSelectNode, onSelectSlot) }
                 val badgeChild = node.slots["badge"]?.firstOrNull()
                 if (badgeChild != null) {
                     Box(modifier = Modifier.align(Alignment.TopEnd)) {
-                        RenderNode(badgeChild, selectedNodeId, onSelectNode)
+                        RenderNode(badgeChild, selectedNodeId, selectedSlotName, onSelectNode, onSelectSlot)
                     }
                 }
             }
@@ -640,7 +733,7 @@ private fun RenderNode(
             ) {
                 val badgeContent = node.slots["content"]?.firstOrNull()
                 if (badgeContent != null) {
-                    RenderNode(badgeContent, selectedNodeId, onSelectNode)
+                    RenderNode(badgeContent, selectedNodeId, selectedSlotName, onSelectNode, onSelectSlot)
                 } else {
                     Box(Modifier.size(8.dp))
                 }
@@ -662,18 +755,18 @@ private fun RenderNode(
                     val leadingIcon = node.slots["leadingIcon"]?.firstOrNull()
                         ?: node.slots["icon"]?.firstOrNull()
                     if (leadingIcon != null) {
-                        RenderNode(leadingIcon, selectedNodeId, onSelectNode)
+                        RenderNode(leadingIcon, selectedNodeId, selectedSlotName, onSelectNode, onSelectSlot)
                     }
                     val label = node.slots["label"]?.firstOrNull()
                     if (label != null) {
-                        RenderNode(label, selectedNodeId, onSelectNode)
+                        RenderNode(label, selectedNodeId, selectedSlotName, onSelectNode, onSelectSlot)
                     } else {
                         val defaultText = (node.properties["label"] as? JsonPrimitive)?.content ?: node.catalogId
                         Text(defaultText, style = MaterialTheme.typography.labelMedium)
                     }
                     val trailingIcon = node.slots["trailingIcon"]?.firstOrNull()
                     if (trailingIcon != null) {
-                        RenderNode(trailingIcon, selectedNodeId, onSelectNode)
+                        RenderNode(trailingIcon, selectedNodeId, selectedSlotName, onSelectNode, onSelectSlot)
                     }
                 }
             }
@@ -816,6 +909,7 @@ private fun Modifier.selectableWrapper(
 private fun EmptySlotPlaceholder(
     slotName: String,
     hint: String? = null,
+    isSelected: Boolean = false,
     onClick: () -> Unit = {}
 ) {
     Box(
@@ -823,20 +917,39 @@ private fun EmptySlotPlaceholder(
             .fillMaxWidth()
             .padding(4.dp)
             .clip(RoundedCornerShape(6.dp))
+            .background(
+                if (isSelected) MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.35f)
+                else MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.15f)
+            )
             .border(
-                width = 1.dp,
-                color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.6f),
+                width = if (isSelected) 1.5.dp else 1.dp,
+                color = if (isSelected) MaterialTheme.colorScheme.primary
+                else MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.6f),
                 shape = RoundedCornerShape(6.dp)
             )
             .clickable(role = androidx.compose.ui.semantics.Role.Button) { onClick() }
             .padding(horizontal = 8.dp, vertical = 6.dp),
         contentAlignment = Alignment.Center
     ) {
-        Text(
-            text = hint ?: "+ Slot: $slotName",
-            style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.75f)
-        )
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = hint ?: "+ Slot: $slotName",
+                style = MaterialTheme.typography.labelSmall,
+                fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal,
+                color = if (isSelected) MaterialTheme.colorScheme.primary
+                else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.85f)
+            )
+            if (isSelected) {
+                StudioBadge(
+                    text = "TARGETED",
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary
+                )
+            }
+        }
     }
 }
 

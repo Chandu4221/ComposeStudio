@@ -133,7 +133,8 @@ data class ComponentNode(
 @Serializable
 data class ProjectState(
     val rootNode: ComponentNode? = null,
-    val selectedNodeId: String? = null
+    val selectedNodeId: String? = null,
+    val selectedSlotName: String? = null
 ) {
     /**
      * Helper to find the currently selected node.

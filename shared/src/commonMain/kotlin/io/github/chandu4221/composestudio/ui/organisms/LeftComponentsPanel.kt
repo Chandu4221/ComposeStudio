@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Layers
 import androidx.compose.material.icons.filled.Widgets
@@ -190,6 +191,49 @@ fun LeftComponentsPanel(
                         onQueryChange = { searchQuery = it }
                     )
 
+                    // Active Slot Targeting Banner
+                    val activeSlot = projectState.selectedSlotName
+                    val selectedNode = projectState.selectedNode
+                    if (activeSlot != null && selectedNode != null) {
+                        Surface(
+                            modifier = Modifier.fillMaxWidth(),
+                            shape = MaterialTheme.shapes.small,
+                            color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f),
+                            border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.5f))
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Column(modifier = Modifier.weight(1f)) {
+                                    Text(
+                                        text = "Targeting Slot:",
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
+                                    )
+                                    Text(
+                                        text = "${selectedNode.catalogId} > $activeSlot",
+                                        style = MaterialTheme.typography.labelMedium,
+                                        fontWeight = FontWeight.SemiBold,
+                                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                                    )
+                                }
+                                IconButton(
+                                    onClick = { store.dispatch(StudioIntent.SelectSlot(selectedNode.id, null)) },
+                                    modifier = Modifier.size(24.dp)
+                                ) {
+                                    StudioIcon(
+                                        imageVector = Icons.Default.Close,
+                                        contentDescription = "Clear slot target",
+                                        size = 14.dp,
+                                        tint = MaterialTheme.colorScheme.onPrimaryContainer
+                                    )
+                                }
+                            }
+                        }
+                    }
+
                     if (isLoading && components.isEmpty()) {
                         Box(
                             modifier = Modifier
@@ -256,7 +300,7 @@ fun LeftComponentsPanel(
                                                     store.dispatch(
                                                         StudioIntent.DropComponent(
                                                             targetParentId = targetParentId,
-                                                            targetSlotName = null,
+                                                            targetSlotName = projectState.selectedSlotName,
                                                             component = component
                                                         )
                                                     )

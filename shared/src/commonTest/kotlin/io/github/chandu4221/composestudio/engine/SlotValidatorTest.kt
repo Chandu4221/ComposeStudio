@@ -4,6 +4,8 @@ import io.github.chandu4221.composestudio.data.AtomicCategory
 import io.github.chandu4221.composestudio.data.ComponentCatalog
 import io.github.chandu4221.composestudio.data.ComponentDefinition
 import io.github.chandu4221.composestudio.state.ComponentNode
+import io.github.chandu4221.composestudio.state.StudioIntent
+import io.github.chandu4221.composestudio.state.StudioStore
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
@@ -251,5 +253,34 @@ class SlotValidatorTest {
             val def = ComponentDefinition(id = leafId, displayName = leafId, category = "DISPLAY")
             assertTrue(def.slotDefinitions.isEmpty(), "Component '$leafId' should declare 0 slots")
         }
+    }
+
+    @Test
+    fun store_selects_and_targets_specific_slot() {
+        val store = StudioStore(catalog)
+        val initialRoot = ComponentNode(catalogId = "Scaffold")
+        store.dispatch(StudioIntent.SetRootNode(initialRoot))
+
+        // Target topBar slot on Scaffold
+        store.dispatch(StudioIntent.SelectSlot(initialRoot.id, "topBar"))
+        assertEquals("topBar", store.state.value.selectedSlotName)
+        assertEquals(initialRoot.id, store.state.value.selectedNodeId)
+
+        // Drop TopAppBar with targeted slot
+        val topAppBarDef = findDef("TopAppBar")
+        store.dispatch(
+            StudioIntent.DropComponent(
+                targetParentId = initialRoot.id,
+                targetSlotName = store.state.value.selectedSlotName,
+                component = topAppBarDef
+            )
+        )
+
+        val updatedRoot = store.state.value.rootNode!!
+        val topBarChildren = updatedRoot.slots["topBar"].orEmpty()
+        assertEquals(1, topBarChildren.size)
+        assertEquals("TopAppBar", topBarChildren.first().catalogId)
+        // Active slot target is cleared after successful drop
+        assertNull(store.state.value.selectedSlotName)
     }
 }
