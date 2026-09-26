@@ -1,6 +1,7 @@
 package io.github.chandu4221.composestudio.state
 
 import androidx.compose.runtime.staticCompositionLocalOf
+import io.github.chandu4221.composestudio.data.AtomicCategory
 import io.github.chandu4221.composestudio.data.CatalogRepository
 import io.github.chandu4221.composestudio.data.ComponentCatalog
 import io.github.chandu4221.composestudio.data.ComponentDefinition
@@ -204,6 +205,7 @@ class StudioStore(
 
         return ComponentNode(
             catalogId = component.id,
+            category = component.atomicCategory,
             properties = defaultProperties
         )
     }
@@ -215,6 +217,7 @@ class StudioStore(
         fun createInitialProjectState(): ProjectState {
             val buttonNode = ComponentNode(
                 catalogId = "Button",
+                category = AtomicCategory.ATOM,
                 properties = mapOf(
                     "text" to JsonPrimitive("Get Started"),
                     "enabled" to JsonPrimitive(true)
@@ -223,16 +226,19 @@ class StudioStore(
 
             val bodyText = ComponentNode(
                 catalogId = "Text",
+                category = AtomicCategory.ATOM,
                 properties = mapOf("text" to JsonPrimitive("Build beautiful apps with Jetpack Compose and Material 3."))
             )
 
             val headingText = ComponentNode(
                 catalogId = "Text",
+                category = AtomicCategory.ATOM,
                 properties = mapOf("text" to JsonPrimitive("Welcome to Compose"))
             )
 
             val contentColumn = ComponentNode(
                 catalogId = "Column",
+                category = AtomicCategory.ORGANISM,
                 slots = mapOf(
                     "content" to listOf(headingText, bodyText, buttonNode)
                 )
@@ -240,11 +246,13 @@ class StudioStore(
 
             val topBarNode = ComponentNode(
                 catalogId = "TopAppBar",
+                category = AtomicCategory.ORGANISM,
                 properties = mapOf("title" to JsonPrimitive("Compose App"))
             )
 
             val scaffoldRoot = ComponentNode(
                 catalogId = "Scaffold",
+                category = AtomicCategory.TEMPLATE,
                 slots = mapOf(
                     "topBar" to listOf(topBarNode),
                     "content" to listOf(contentColumn)

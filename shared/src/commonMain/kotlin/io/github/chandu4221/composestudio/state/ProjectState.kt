@@ -1,5 +1,7 @@
 package io.github.chandu4221.composestudio.state
 
+import io.github.chandu4221.composestudio.data.AtomicCategory
+import io.github.chandu4221.composestudio.data.ComponentCatalog
 import kotlin.random.Random
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonElement
@@ -36,11 +38,13 @@ data class ModifierNode(
 /**
  * Representation of a Composable in the visual builder tree.
  * Linked to a component definition in `compose-catalog.json` via [catalogId].
+ * Categorized by [category] in the Atomic Composables hierarchy.
  */
 @Serializable
 data class ComponentNode(
     val id: String = generateUuid(),
     val catalogId: String,
+    val category: AtomicCategory = AtomicCategory.ATOM,
     val properties: Map<String, JsonElement> = emptyMap(),
     val slots: Map<String, List<ComponentNode>> = emptyMap(),
     val modifiers: List<ModifierNode> = emptyList()
@@ -139,11 +143,25 @@ data class ProjectState(
 
     /**
      * Resolves the receiver scope for [targetId] based on its immediate parent container.
+     * Checks [catalog] and [SlotDefinition.scopeReceiver] if provided, falling back to container IDs.
      * Returns "COLUMN", "ROW", "BOX", "LAZY_ITEM", or null.
      */
-    fun getParentScope(targetId: String): String? {
+    fun getParentScope(targetId: String, catalog: ComponentCatalog? = null): String? {
         val parentInfo = rootNode?.findParent(targetId) ?: return null
-        val (parentNode, _) = parentInfo
+        val (parentNode, slotName) = parentInfo
+        if (catalog != null) {
+            val parentDef = catalog.components.find { it.id == parentNode.catalogId }
+            val slotDef = parentDef?.findSlot(slotName)
+            if (slotDef?.scopeReceiver != null) {
+                return when (val scope = slotDef.scopeReceiver.removeSuffix("Scope").uppercase()) {
+                    "COLUMN" -> "COLUMN"
+                    "ROW" -> "ROW"
+                    "BOX" -> "BOX"
+                    "LAZY_ITEM", "LAZYITEM" -> "LAZY_ITEM"
+                    else -> scope
+                }
+            }
+        }
         return when (parentNode.catalogId) {
             "Column" -> "COLUMN"
             "Row" -> "ROW"

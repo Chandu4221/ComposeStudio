@@ -25,6 +25,29 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import kotlinx.serialization.Serializable
 
 @Serializable
+enum class AtomicCategory {
+    ATOM,
+    MOLECULE,
+    ORGANISM,
+    TEMPLATE
+}
+
+@Serializable
+enum class SlotCardinality {
+    SINGLE,
+    MULTIPLE
+}
+
+@Serializable
+data class SlotDefinition(
+    val name: String,
+    val allowedCategories: List<AtomicCategory> = listOf(AtomicCategory.ATOM, AtomicCategory.MOLECULE, AtomicCategory.ORGANISM),
+    val allowedCatalogIds: List<String>? = null,
+    val scopeReceiver: String? = null,
+    val cardinality: SlotCardinality = SlotCardinality.MULTIPLE
+)
+
+@Serializable
 data class ComponentCatalog(
     val composeMultiplatformVersion: String? = null,
     val material3Version: String? = null,
@@ -38,6 +61,7 @@ data class ComponentDefinition(
     val displayName: String,
     val packageName: String? = null,
     val category: String,
+    val atomicCategory: AtomicCategory = resolveAtomicCategory(id, category),
     val tier: String? = null,
     val isExperimental: Boolean = false,
     val experimentalAnnotations: List<String> = emptyList(),
@@ -46,8 +70,23 @@ data class ComponentDefinition(
     val receiverScope: String? = null,
     val parameters: List<ComponentParameter> = emptyList(),
     val callbacks: List<ComponentCallback> = emptyList(),
-    val slots: List<ComponentSlot> = emptyList()
+    val slots: List<ComponentSlot> = emptyList(),
+    val slotDefinitions: List<SlotDefinition> = resolveSlotDefinitions(id, slots)
 ) {
+    /**
+     * Finds a strongly-typed [SlotDefinition] by name.
+     */
+    fun findSlot(name: String): SlotDefinition? {
+        return slotDefinitions.find { it.name == name }
+            ?: slots.find { it.name == name }?.let { slot ->
+                SlotDefinition(
+                    name = slot.name,
+                    scopeReceiver = slot.receiverScope,
+                    cardinality = if (slot.cardinality == "SINGLE") SlotCardinality.SINGLE else SlotCardinality.MULTIPLE
+                )
+            }
+    }
+
     /**
      * Resolves the most appropriate Material icon for the component.
      */
@@ -77,6 +116,190 @@ data class ComponentDefinition(
             category == "LAYOUT" -> Icons.Default.CropSquare
             category == "NAVIGATION" -> Icons.Default.Navigation
             else -> Icons.Default.Widgets
+        }
+    }
+}
+
+/**
+ * Maps component ID and category to its strict [AtomicCategory].
+ */
+fun resolveAtomicCategory(id: String, category: String): AtomicCategory {
+    return when {
+        // TEMPLATES: Screen-level scaffolds & dialogs
+        id in setOf(
+            "Scaffold", "BottomSheetScaffold",
+            "ModalNavigationDrawer", "PermanentNavigationDrawer", "DismissibleNavigationDrawer",
+            "AlertDialog", "BasicAlertDialog"
+        ) -> AtomicCategory.TEMPLATE
+
+        // ORGANISMS: Complex composite sections & layouts
+        id.contains("TopAppBar") || id in setOf(
+            "NavigationBar", "NavigationRail", "BottomAppBar",
+            "Card", "ElevatedCard", "OutlinedCard",
+            "Row", "Column", "Box", "LazyColumn", "LazyRow", "Surface"
+        ) -> AtomicCategory.ORGANISM
+
+        // MOLECULES: Combinations of atoms (composite inputs, list rows, chips, search)
+        id.contains("Chip") || id.contains("TextField") || id in setOf(
+            "ListItem", "SearchBar", "DockedSearchBar",
+            "NavigationBarItem", "NavigationRailItem", "Tab", "LeadingIconTab"
+        ) -> AtomicCategory.MOLECULE
+
+        // ATOMS: Base UI elements & simple controls
+        else -> AtomicCategory.ATOM
+    }
+}
+
+/**
+ * Builds strongly-typed [SlotDefinition]s for a component, defining explicit
+ * categories, whitelists, cardinality, and scope receivers per slot.
+ */
+fun resolveSlotDefinitions(id: String, existingSlots: List<ComponentSlot>): List<SlotDefinition> {
+    return when (id) {
+        "Scaffold" -> listOf(
+            SlotDefinition(
+                name = "topBar",
+                allowedCategories = listOf(AtomicCategory.ORGANISM),
+                allowedCatalogIds = listOf("TopAppBar", "CenterAlignedTopAppBar", "MediumTopAppBar", "LargeTopAppBar"),
+                cardinality = SlotCardinality.SINGLE
+            ),
+            SlotDefinition(
+                name = "bottomBar",
+                allowedCategories = listOf(AtomicCategory.ORGANISM),
+                allowedCatalogIds = listOf("NavigationBar", "BottomAppBar"),
+                cardinality = SlotCardinality.SINGLE
+            ),
+            SlotDefinition(
+                name = "floatingActionButton",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("FloatingActionButton", "SmallFloatingActionButton", "LargeFloatingActionButton", "ExtendedFloatingActionButton"),
+                cardinality = SlotCardinality.SINGLE
+            ),
+            SlotDefinition(
+                name = "snackbarHost",
+                allowedCategories = listOf(AtomicCategory.ATOM, AtomicCategory.MOLECULE),
+                allowedCatalogIds = listOf("SnackbarHost", "Snackbar"),
+                cardinality = SlotCardinality.SINGLE
+            ),
+            SlotDefinition(
+                name = "content",
+                allowedCategories = listOf(AtomicCategory.ATOM, AtomicCategory.MOLECULE, AtomicCategory.ORGANISM),
+                cardinality = SlotCardinality.MULTIPLE
+            )
+        )
+
+        "CenterAlignedTopAppBar", "TopAppBar", "MediumTopAppBar", "LargeTopAppBar" -> listOf(
+            SlotDefinition(
+                name = "title",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("Text"),
+                cardinality = SlotCardinality.SINGLE
+            ),
+            SlotDefinition(
+                name = "navigationIcon",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("IconButton", "Icon"),
+                cardinality = SlotCardinality.SINGLE
+            ),
+            SlotDefinition(
+                name = "actions",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("IconButton", "Icon", "TextButton"),
+                scopeReceiver = "RowScope",
+                cardinality = SlotCardinality.MULTIPLE
+            )
+        )
+
+        "NavigationBar" -> listOf(
+            SlotDefinition(
+                name = "content",
+                allowedCategories = listOf(AtomicCategory.MOLECULE),
+                allowedCatalogIds = listOf("NavigationBarItem"),
+                scopeReceiver = "RowScope",
+                cardinality = SlotCardinality.MULTIPLE
+            )
+        )
+
+        "NavigationRail" -> listOf(
+            SlotDefinition(
+                name = "header",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("FloatingActionButton", "IconButton", "Icon"),
+                cardinality = SlotCardinality.SINGLE
+            ),
+            SlotDefinition(
+                name = "content",
+                allowedCategories = listOf(AtomicCategory.MOLECULE),
+                allowedCatalogIds = listOf("NavigationRailItem"),
+                scopeReceiver = "ColumnScope",
+                cardinality = SlotCardinality.MULTIPLE
+            )
+        )
+
+        "Button", "ElevatedButton", "FilledTonalButton", "OutlinedButton", "TextButton" -> listOf(
+            SlotDefinition(
+                name = "content",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("Text", "Icon", "CircularProgressIndicator"),
+                scopeReceiver = "RowScope",
+                cardinality = SlotCardinality.MULTIPLE
+            )
+        )
+
+        "IconButton", "FilledIconButton", "FilledTonalIconButton", "OutlinedIconButton" -> listOf(
+            SlotDefinition(
+                name = "content",
+                allowedCategories = listOf(AtomicCategory.ATOM),
+                allowedCatalogIds = listOf("Icon", "Text"),
+                cardinality = SlotCardinality.SINGLE
+            )
+        )
+
+        "Column", "LazyColumn" -> listOf(
+            SlotDefinition(
+                name = "content",
+                allowedCategories = listOf(AtomicCategory.ATOM, AtomicCategory.MOLECULE, AtomicCategory.ORGANISM),
+                scopeReceiver = "ColumnScope",
+                cardinality = SlotCardinality.MULTIPLE
+            )
+        )
+
+        "Row", "LazyRow" -> listOf(
+            SlotDefinition(
+                name = "content",
+                allowedCategories = listOf(AtomicCategory.ATOM, AtomicCategory.MOLECULE, AtomicCategory.ORGANISM),
+                scopeReceiver = "RowScope",
+                cardinality = SlotCardinality.MULTIPLE
+            )
+        )
+
+        "Box" -> listOf(
+            SlotDefinition(
+                name = "content",
+                allowedCategories = listOf(AtomicCategory.ATOM, AtomicCategory.MOLECULE, AtomicCategory.ORGANISM),
+                scopeReceiver = "BoxScope",
+                cardinality = SlotCardinality.MULTIPLE
+            )
+        )
+
+        "Card", "ElevatedCard", "OutlinedCard", "Surface" -> listOf(
+            SlotDefinition(
+                name = "content",
+                allowedCategories = listOf(AtomicCategory.ATOM, AtomicCategory.MOLECULE, AtomicCategory.ORGANISM),
+                cardinality = SlotCardinality.MULTIPLE
+            )
+        )
+
+        else -> {
+            if (existingSlots.isEmpty()) emptyList()
+            else existingSlots.filter { it.isComposable }.map { slot ->
+                SlotDefinition(
+                    name = slot.name,
+                    allowedCategories = listOf(AtomicCategory.ATOM, AtomicCategory.MOLECULE, AtomicCategory.ORGANISM),
+                    scopeReceiver = slot.receiverScope,
+                    cardinality = if (slot.cardinality == "SINGLE") SlotCardinality.SINGLE else SlotCardinality.MULTIPLE
+                )
+            }
         }
     }
 }
