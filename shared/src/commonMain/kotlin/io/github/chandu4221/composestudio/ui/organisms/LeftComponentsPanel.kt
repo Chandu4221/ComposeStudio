@@ -43,8 +43,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import io.github.chandu4221.composestudio.data.AtomicCategory
 import io.github.chandu4221.composestudio.data.CatalogRepository
+import io.github.chandu4221.composestudio.data.ComponentCatalog
 import io.github.chandu4221.composestudio.data.ComponentDefinition
+import io.github.chandu4221.composestudio.data.SlotCardinality
 import io.github.chandu4221.composestudio.state.ComponentNode
 import io.github.chandu4221.composestudio.state.LocalStudioStore
 import io.github.chandu4221.composestudio.state.StudioIntent
@@ -258,15 +261,31 @@ fun LeftComponentsPanel(
                                                         )
                                                     )
                                                 },
-                                                badge = if (component.isExperimental) {
-                                                    {
+                                                badge = {
+                                                    Row(
+                                                        horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                                        verticalAlignment = Alignment.CenterVertically
+                                                    ) {
+                                                        if (component.isExperimental) {
+                                                            StudioBadge(
+                                                                text = "Exp",
+                                                                containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                                                                contentColor = MaterialTheme.colorScheme.onTertiaryContainer
+                                                            )
+                                                        }
+                                                        val (badgeBg, badgeFg) = when (component.atomicCategory) {
+                                                            AtomicCategory.TEMPLATE -> MaterialTheme.colorScheme.tertiaryContainer to MaterialTheme.colorScheme.onTertiaryContainer
+                                                            AtomicCategory.ORGANISM -> MaterialTheme.colorScheme.primaryContainer to MaterialTheme.colorScheme.onPrimaryContainer
+                                                            AtomicCategory.MOLECULE -> MaterialTheme.colorScheme.secondaryContainer to MaterialTheme.colorScheme.onSecondaryContainer
+                                                            AtomicCategory.ATOM -> MaterialTheme.colorScheme.surfaceVariant to MaterialTheme.colorScheme.onSurfaceVariant
+                                                        }
                                                         StudioBadge(
-                                                            text = "Exp",
-                                                            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                                                            contentColor = MaterialTheme.colorScheme.onTertiaryContainer
+                                                            text = component.atomicCategory.name,
+                                                            containerColor = badgeBg,
+                                                            contentColor = badgeFg
                                                         )
                                                     }
-                                                } else null
+                                                }
                                             )
                                         }
                                     }
@@ -289,7 +308,8 @@ fun LeftComponentsPanel(
                             node = root,
                             selectedNodeId = projectState.selectedNodeId,
                             onSelectNode = { store.dispatch(StudioIntent.SelectNode(it)) },
-                            depth = 0
+                            depth = 0,
+                            catalog = store.currentCatalog
                         )
                     }
                 }
@@ -349,9 +369,12 @@ private fun LiveLayersTree(
     selectedNodeId: String?,
     onSelectNode: (String) -> Unit,
     depth: Int,
-    slotName: String? = null
+    slotName: String? = null,
+    catalog: ComponentCatalog = ComponentCatalog()
 ) {
     val isSelected = node.id == selectedNodeId
+    val componentDef = catalog.components.find { it.id == node.catalogId }
+    val definedSlots = componentDef?.slotDefinitions.orEmpty()
 
     Column(modifier = Modifier.fillMaxWidth()) {
         Surface(
@@ -383,21 +406,50 @@ private fun LiveLayersTree(
                 Text(
                     text = if (slotName != null) "$slotName: ${node.catalogId}" else node.catalogId,
                     style = MaterialTheme.typography.bodySmall,
-                    color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface
+                    color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier.weight(1f, fill = false)
+                )
+                StudioBadge(
+                    text = node.category.name,
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                    contentColor = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }
 
-        // Render children grouped by slot
-        node.slots.forEach { (slot, children) ->
-            children.forEach { child ->
-                LiveLayersTree(
-                    node = child,
-                    selectedNodeId = selectedNodeId,
-                    onSelectNode = onSelectNode,
-                    depth = depth + 1,
-                    slotName = slot
-                )
+        // Render slots and their children
+        val allSlotNames = (definedSlots.map { it.name } + node.slots.keys).distinct()
+        allSlotNames.forEach { currentSlot ->
+            val slotDef = definedSlots.find { it.name == currentSlot }
+            val children = node.slots[currentSlot].orEmpty()
+
+            if (children.isNotEmpty()) {
+                children.forEach { child ->
+                    LiveLayersTree(
+                        node = child,
+                        selectedNodeId = selectedNodeId,
+                        onSelectNode = onSelectNode,
+                        depth = depth + 1,
+                        slotName = currentSlot,
+                        catalog = catalog
+                    )
+                }
+            } else if (slotDef != null && slotDef.cardinality == SlotCardinality.SINGLE) {
+                // Show vacant single slot indicator
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = ((depth + 1) * 12 + 8).dp, top = 2.dp, bottom = 2.dp)
+                        .clickable(role = androidx.compose.ui.semantics.Role.Button) { onSelectNode(node.id) },
+                    horizontalArrangement = Arrangement.spacedBy(4.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "$currentSlot: (Empty 0/1)",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.55f)
+                    )
+                }
             }
         }
     }

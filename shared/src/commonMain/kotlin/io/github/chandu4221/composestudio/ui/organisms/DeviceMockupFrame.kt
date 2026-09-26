@@ -171,21 +171,19 @@ private fun RenderNode(
     val isSelected = node.id == selectedNodeId
 
     when (node.catalogId) {
-        "Scaffold" -> {
+        "Scaffold", "BottomSheetScaffold" -> {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .selectableWrapper(node.id, isSelected, onSelectNode)
             ) {
-                // TopBar Slot
-                val topBars = node.slots["topBar"].orEmpty()
-                if (topBars.isNotEmpty()) {
-                    topBars.forEach { child ->
-                        RenderNode(child, selectedNodeId, onSelectNode)
-                    }
+                // TopBar Slot (SINGLE cardinality)
+                val topBarNode = node.slots["topBar"]?.firstOrNull()
+                if (topBarNode != null) {
+                    RenderNode(topBarNode, selectedNodeId, onSelectNode)
                 }
 
-                // Main Content Slot
+                // Main Content Slot (MULTIPLE cardinality)
                 Box(
                     modifier = Modifier
                         .weight(1f)
@@ -193,35 +191,39 @@ private fun RenderNode(
                         .verticalScroll(rememberScrollState())
                 ) {
                     val contentNodes = node.slots["content"].orEmpty()
-                    Column(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalArrangement = Arrangement.spacedBy(12.dp)
-                    ) {
-                        contentNodes.forEach { child ->
-                            RenderNode(child, selectedNodeId, onSelectNode)
+                    if (contentNodes.isEmpty()) {
+                        EmptySlotPlaceholder(
+                            slotName = "content",
+                            hint = "Drop Column or Layout here",
+                            onClick = { onSelectNode(node.id) }
+                        )
+                    } else {
+                        Column(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            contentNodes.forEach { child ->
+                                RenderNode(child, selectedNodeId, onSelectNode)
+                            }
                         }
                     }
                 }
 
-                // FloatingActionButton Slot
-                val fabs = node.slots["floatingActionButton"].orEmpty()
-                if (fabs.isNotEmpty()) {
+                // FloatingActionButton Slot (SINGLE cardinality)
+                val fabNode = node.slots["floatingActionButton"]?.firstOrNull()
+                if (fabNode != null) {
                     Row(
                         modifier = Modifier.fillMaxWidth().padding(8.dp),
                         horizontalArrangement = Arrangement.End
                     ) {
-                        fabs.forEach { child ->
-                            RenderNode(child, selectedNodeId, onSelectNode)
-                        }
+                        RenderNode(fabNode, selectedNodeId, onSelectNode)
                     }
                 }
 
-                // BottomBar Slot
-                val bottomBars = node.slots["bottomBar"].orEmpty()
-                if (bottomBars.isNotEmpty()) {
-                    bottomBars.forEach { child ->
-                        RenderNode(child, selectedNodeId, onSelectNode)
-                    }
+                // BottomBar Slot (SINGLE cardinality)
+                val bottomBarNode = node.slots["bottomBar"]?.firstOrNull()
+                if (bottomBarNode != null) {
+                    RenderNode(bottomBarNode, selectedNodeId, onSelectNode)
                 }
             }
         }
@@ -271,16 +273,14 @@ private fun RenderNode(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // Leading Slot: navigationIcon
+                    // Leading Slot: navigationIcon (SINGLE)
                     Row(
                         modifier = Modifier.width(48.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        val navChildren = node.slots["navigationIcon"].orEmpty()
-                        if (navChildren.isNotEmpty()) {
-                            navChildren.forEach { child ->
-                                RenderNode(child, selectedNodeId, onSelectNode)
-                            }
+                        val navChild = node.slots["navigationIcon"]?.firstOrNull()
+                        if (navChild != null) {
+                            RenderNode(navChild, selectedNodeId, onSelectNode)
                         } else if (navIconVector != null) {
                             IconButton(onClick = { onSelectNode(node.id) }, modifier = Modifier.size(40.dp)) {
                                 StudioIcon(navIconVector, navIconName, tint = MaterialTheme.colorScheme.onSurface)
@@ -288,16 +288,14 @@ private fun RenderNode(
                         }
                     }
 
-                    // Center / Title Slot: title
+                    // Center / Title Slot: title (SINGLE)
                     Box(
                         modifier = Modifier.weight(1f),
                         contentAlignment = if (titleAlign == "Center") Alignment.Center else Alignment.CenterStart
                     ) {
-                        val titleChildren = node.slots["title"].orEmpty()
-                        if (titleChildren.isNotEmpty()) {
-                            titleChildren.forEach { child ->
-                                RenderNode(child, selectedNodeId, onSelectNode)
-                            }
+                        val titleChild = node.slots["title"]?.firstOrNull()
+                        if (titleChild != null) {
+                            RenderNode(titleChild, selectedNodeId, onSelectNode)
                         } else {
                             Text(
                                 text = titleText,
@@ -309,7 +307,7 @@ private fun RenderNode(
                         }
                     }
 
-                    // Trailing Slot: actions
+                    // Trailing Slot: actions (MULTIPLE)
                     Row(
                         modifier = Modifier.widthIn(min = 48.dp),
                         horizontalArrangement = Arrangement.End,
@@ -441,6 +439,25 @@ private fun RenderNode(
             val style = (node.properties["style"] as? JsonPrimitive)?.content ?: "Filled"
             val enabled = (node.properties["enabled"] as? JsonPrimitive)?.content?.toBooleanStrictOrNull() ?: true
 
+            val contentChildren = node.slots["content"].orEmpty()
+            val buttonContent: @Composable () -> Unit = {
+                if (contentChildren.isNotEmpty()) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        contentChildren.forEach { child ->
+                            RenderNode(child, selectedNodeId, onSelectNode)
+                        }
+                    }
+                } else {
+                    Text(
+                        text = label,
+                        style = MaterialTheme.typography.labelLarge
+                    )
+                }
+            }
+
             Box(
                 modifier = Modifier.selectableWrapper(node.id, isSelected, onSelectNode)
             ) {
@@ -451,7 +468,7 @@ private fun RenderNode(
                             enabled = enabled,
                             shape = MaterialTheme.shapes.small
                         ) {
-                            Text(label)
+                            buttonContent()
                         }
                     }
                     "Outlined" -> {
@@ -460,7 +477,7 @@ private fun RenderNode(
                             enabled = enabled,
                             shape = MaterialTheme.shapes.small
                         ) {
-                            Text(label)
+                            buttonContent()
                         }
                     }
                     "Text" -> {
@@ -469,7 +486,7 @@ private fun RenderNode(
                             enabled = enabled,
                             shape = MaterialTheme.shapes.small
                         ) {
-                            Text(label)
+                            buttonContent()
                         }
                     }
                     else -> {
@@ -479,18 +496,14 @@ private fun RenderNode(
                             shape = MaterialTheme.shapes.small,
                             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
                         ) {
-                            Text(
-                                text = label,
-                                style = MaterialTheme.typography.labelLarge,
-                                color = MaterialTheme.colorScheme.onPrimary
-                            )
+                            buttonContent()
                         }
                     }
                 }
             }
         }
 
-        "FloatingActionButton" -> {
+        "FloatingActionButton", "SmallFloatingActionButton", "LargeFloatingActionButton" -> {
             Box(
                 modifier = Modifier.selectableWrapper(node.id, isSelected, onSelectNode)
             ) {
@@ -499,7 +512,169 @@ private fun RenderNode(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     contentColor = MaterialTheme.colorScheme.onPrimaryContainer
                 ) {
-                    StudioIcon(Icons.Default.Add, "Add")
+                    val contentChild = node.slots["content"]?.firstOrNull()
+                    if (contentChild != null) {
+                        RenderNode(contentChild, selectedNodeId, onSelectNode)
+                    } else {
+                        StudioIcon(Icons.Default.Add, "Add")
+                    }
+                }
+            }
+        }
+
+        "ExtendedFloatingActionButton" -> {
+            Box(
+                modifier = Modifier.selectableWrapper(node.id, isSelected, onSelectNode)
+            ) {
+                Surface(
+                    onClick = { onSelectNode(node.id) },
+                    shape = MaterialTheme.shapes.large,
+                    color = MaterialTheme.colorScheme.primaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                    shadowElevation = 6.dp
+                ) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        val iconNode = node.slots["icon"]?.firstOrNull()
+                        if (iconNode != null) {
+                            RenderNode(iconNode, selectedNodeId, onSelectNode)
+                        } else {
+                            StudioIcon(Icons.Default.Add, "Icon")
+                        }
+                        val textNode = node.slots["text"]?.firstOrNull()
+                        if (textNode != null) {
+                            RenderNode(textNode, selectedNodeId, onSelectNode)
+                        } else {
+                            Text(
+                                text = (node.properties["text"] as? JsonPrimitive)?.content ?: "Action",
+                                style = MaterialTheme.typography.labelLarge
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
+        "IconButton", "FilledIconButton", "FilledTonalIconButton", "OutlinedIconButton" -> {
+            IconButton(
+                onClick = { onSelectNode(node.id) },
+                modifier = Modifier.selectableWrapper(node.id, isSelected, onSelectNode)
+            ) {
+                val contentChild = node.slots["content"]?.firstOrNull()
+                if (contentChild != null) {
+                    RenderNode(contentChild, selectedNodeId, onSelectNode)
+                } else {
+                    StudioIcon(Icons.Default.Add, "Icon")
+                }
+            }
+        }
+
+        "NavigationBar" -> {
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .selectableWrapper(node.id, isSelected, onSelectNode),
+                color = MaterialTheme.colorScheme.surfaceContainer
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 8.dp, vertical = 4.dp),
+                    horizontalArrangement = Arrangement.SpaceAround,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    val items = node.slots["content"].orEmpty()
+                    if (items.isEmpty()) {
+                        EmptySlotPlaceholder("content", "Add NavigationBarItems") { onSelectNode(node.id) }
+                    } else {
+                        items.forEach { child ->
+                            RenderNode(child, selectedNodeId, onSelectNode)
+                        }
+                    }
+                }
+            }
+        }
+
+        "NavigationBarItem", "NavigationRailItem" -> {
+            Column(
+                modifier = Modifier
+                    .selectableWrapper(node.id, isSelected, onSelectNode)
+                    .padding(horizontal = 8.dp, vertical = 4.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                val iconChild = node.slots["icon"]?.firstOrNull()
+                if (iconChild != null) {
+                    RenderNode(iconChild, selectedNodeId, onSelectNode)
+                } else {
+                    StudioIcon(Icons.Default.Favorite, "Icon", size = 20.dp)
+                }
+                val labelChild = node.slots["label"]?.firstOrNull()
+                if (labelChild != null) {
+                    RenderNode(labelChild, selectedNodeId, onSelectNode)
+                } else {
+                    Text("Item", style = MaterialTheme.typography.labelSmall)
+                }
+            }
+        }
+
+        "BadgedBox" -> {
+            Box(modifier = Modifier.selectableWrapper(node.id, isSelected, onSelectNode)) {
+                val contentChildren = node.slots["content"].orEmpty()
+                contentChildren.forEach { RenderNode(it, selectedNodeId, onSelectNode) }
+                val badgeChild = node.slots["badge"]?.firstOrNull()
+                if (badgeChild != null) {
+                    Box(modifier = Modifier.align(Alignment.TopEnd)) {
+                        RenderNode(badgeChild, selectedNodeId, onSelectNode)
+                    }
+                }
+            }
+        }
+
+        "Badge" -> {
+            Surface(
+                modifier = Modifier.selectableWrapper(node.id, isSelected, onSelectNode),
+                shape = CircleShape,
+                color = MaterialTheme.colorScheme.error
+            ) {
+                val badgeContent = node.slots["content"]?.firstOrNull()
+                if (badgeContent != null) {
+                    RenderNode(badgeContent, selectedNodeId, onSelectNode)
+                } else {
+                    Box(Modifier.size(8.dp))
+                }
+            }
+        }
+
+        "AssistChip", "FilterChip", "InputChip", "SuggestionChip" -> {
+            Surface(
+                modifier = Modifier.selectableWrapper(node.id, isSelected, onSelectNode),
+                shape = MaterialTheme.shapes.small,
+                border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+                color = MaterialTheme.colorScheme.surface
+            ) {
+                Row(
+                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    val leadingIcon = node.slots["leadingIcon"]?.firstOrNull()
+                        ?: node.slots["icon"]?.firstOrNull()
+                    if (leadingIcon != null) {
+                        RenderNode(leadingIcon, selectedNodeId, onSelectNode)
+                    }
+                    val label = node.slots["label"]?.firstOrNull()
+                    if (label != null) {
+                        RenderNode(label, selectedNodeId, onSelectNode)
+                    } else {
+                        val defaultText = (node.properties["label"] as? JsonPrimitive)?.content ?: node.catalogId
+                        Text(defaultText, style = MaterialTheme.typography.labelMedium)
+                    }
+                    val trailingIcon = node.slots["trailingIcon"]?.firstOrNull()
+                    if (trailingIcon != null) {
+                        RenderNode(trailingIcon, selectedNodeId, onSelectNode)
+                    }
                 }
             }
         }
@@ -633,6 +808,37 @@ private fun Modifier.selectableWrapper(
         shape = RoundedCornerShape(4.dp)
     )
     .padding(if (isSelected) 2.dp else 0.dp)
+
+/**
+ * Visual dashed outline indicator rendered when a slot is vacant in the visual editor.
+ */
+@Composable
+private fun EmptySlotPlaceholder(
+    slotName: String,
+    hint: String? = null,
+    onClick: () -> Unit = {}
+) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(4.dp)
+            .clip(RoundedCornerShape(6.dp))
+            .border(
+                width = 1.dp,
+                color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.6f),
+                shape = RoundedCornerShape(6.dp)
+            )
+            .clickable(role = androidx.compose.ui.semantics.Role.Button) { onClick() }
+            .padding(horizontal = 8.dp, vertical = 6.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = hint ?: "+ Slot: $slotName",
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.75f)
+        )
+    }
+}
 
 @Preview(showBackground = true)
 @Composable

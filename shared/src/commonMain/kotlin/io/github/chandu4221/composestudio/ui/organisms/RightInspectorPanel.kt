@@ -53,6 +53,9 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import io.github.chandu4221.composestudio.data.AtomicCategory
+import io.github.chandu4221.composestudio.data.SlotCardinality
+import io.github.chandu4221.composestudio.data.SlotDefinition
 import io.github.chandu4221.composestudio.state.ComponentNode
 import io.github.chandu4221.composestudio.state.LocalStudioStore
 import io.github.chandu4221.composestudio.state.ModifierNode
@@ -85,6 +88,7 @@ fun RightInspectorPanel(
     val projectState by store.state.collectAsState()
     val selectedNode = projectState.selectedNode
 
+    var slotsExpanded by remember { mutableStateOf(true) }
     var paramsExpanded by remember { mutableStateOf(true) }
     var scopeExpanded by remember { mutableStateOf(true) }
     var modifiersExpanded by remember { mutableStateOf(true) }
@@ -123,6 +127,17 @@ fun RightInspectorPanel(
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.SemiBold,
                                 color = MaterialTheme.colorScheme.onSurface
+                            )
+                            val (catBg, catFg) = when (selectedNode.category) {
+                                AtomicCategory.TEMPLATE -> MaterialTheme.colorScheme.tertiaryContainer to MaterialTheme.colorScheme.onTertiaryContainer
+                                AtomicCategory.ORGANISM -> MaterialTheme.colorScheme.primaryContainer to MaterialTheme.colorScheme.onPrimaryContainer
+                                AtomicCategory.MOLECULE -> MaterialTheme.colorScheme.secondaryContainer to MaterialTheme.colorScheme.onSecondaryContainer
+                                AtomicCategory.ATOM -> MaterialTheme.colorScheme.surfaceVariant to MaterialTheme.colorScheme.onSurfaceVariant
+                            }
+                            StudioBadge(
+                                text = selectedNode.category.name,
+                                containerColor = catBg,
+                                contentColor = catFg
                             )
                             if (parentScope != null) {
                                 StudioBadge(
@@ -204,6 +219,28 @@ fun RightInspectorPanel(
                                 }
                             } else {
                                 val parentScope = projectState.getParentScope(selectedNode.id)
+
+                    // 1. Slots & Structure Section (Slot as State)
+                    val componentDef = store.currentCatalog.components.find { it.id == selectedNode.catalogId }
+                    val slotDefs = componentDef?.slotDefinitions.orEmpty()
+                    if (slotDefs.isNotEmpty()) {
+                        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                            AccordionHeader(
+                                title = "Slots & Structure (${slotDefs.size})",
+                                isExpanded = slotsExpanded,
+                                onToggle = { slotsExpanded = !slotsExpanded }
+                            )
+
+                            if (slotsExpanded) {
+                                ComponentSlotsInspector(
+                                    node = selectedNode,
+                                    slotDefinitions = slotDefs,
+                                    onSelectChildNode = { childId -> store.dispatch(StudioIntent.SelectNode(childId)) },
+                                    onDeleteChildNode = { childId -> store.dispatch(StudioIntent.DeleteNode(childId)) }
+                                )
+                            }
+                        }
+                    }
 
                     // 2. Dynamic Component-Specific Parameters
                     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -996,6 +1033,133 @@ private fun ParameterTextField(
                     cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
                     modifier = Modifier.fillMaxWidth()
                 )
+            }
+        }
+    }
+}
+
+/**
+ * Dedicated slot inspector listing all defined slots, cardinality, and contained children.
+ */
+@Composable
+private fun ComponentSlotsInspector(
+    node: ComponentNode,
+    slotDefinitions: List<SlotDefinition>,
+    onSelectChildNode: (String) -> Unit,
+    onDeleteChildNode: (String) -> Unit
+) {
+    Column(
+        modifier = Modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        slotDefinitions.forEach { slotDef ->
+            val children = node.slots[slotDef.name].orEmpty()
+            val isSingle = slotDef.cardinality == SlotCardinality.SINGLE
+            val occupancyText = if (isSingle) {
+                if (children.isNotEmpty()) "1 / 1" else "0 / 1"
+            } else {
+                "${children.size} items"
+            }
+
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = MaterialTheme.shapes.small,
+                color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.35f),
+                border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
+            ) {
+                Column(
+                    modifier = Modifier.padding(10.dp),
+                    verticalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Row(
+                            horizontalArrangement = Arrangement.spacedBy(6.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = slotDef.name,
+                                style = MaterialTheme.typography.labelMedium,
+                                fontWeight = FontWeight.SemiBold,
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
+                            if (slotDef.scopeReceiver != null) {
+                                StudioBadge(
+                                    text = slotDef.scopeReceiver,
+                                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                                    contentColor = MaterialTheme.colorScheme.onSecondaryContainer
+                                )
+                            }
+                        }
+
+                        StudioBadge(
+                            text = occupancyText,
+                            containerColor = if (isSingle && children.isNotEmpty()) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant,
+                            contentColor = if (isSingle && children.isNotEmpty()) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+
+                    // Children in this slot
+                    if (children.isNotEmpty()) {
+                        Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                            children.forEach { child ->
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .clip(MaterialTheme.shapes.extraSmall)
+                                        .background(MaterialTheme.colorScheme.surface)
+                                        .clickable(role = androidx.compose.ui.semantics.Role.Button) { onSelectChildNode(child.id) }
+                                        .padding(horizontal = 8.dp, vertical = 6.dp),
+                                    horizontalArrangement = Arrangement.SpaceBetween,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Row(
+                                        horizontalArrangement = Arrangement.spacedBy(6.dp),
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Text(
+                                            text = child.catalogId,
+                                            style = MaterialTheme.typography.bodySmall,
+                                            fontWeight = FontWeight.Medium,
+                                            color = MaterialTheme.colorScheme.onSurface
+                                        )
+                                        StudioBadge(
+                                            text = child.category.name,
+                                            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                                            contentColor = MaterialTheme.colorScheme.onSurfaceVariant
+                                        )
+                                    }
+
+                                    IconButton(
+                                        onClick = { onDeleteChildNode(child.id) },
+                                        modifier = Modifier.size(24.dp)
+                                    ) {
+                                        StudioIcon(
+                                            imageVector = Icons.Default.Close,
+                                            contentDescription = "Remove child",
+                                            size = 14.dp,
+                                            tint = MaterialTheme.colorScheme.error
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        val allowedInfo = if (slotDef.allowedCatalogIds != null) {
+                            slotDef.allowedCatalogIds.joinToString(", ")
+                        } else {
+                            slotDef.allowedCategories.joinToString(", ") { it.name }
+                        }
+                        Text(
+                            text = "Empty (Accepts: $allowedInfo)",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
+                        )
+                    }
+                }
             }
         }
     }

@@ -31,6 +31,7 @@ class StudioStore(
     coroutineScope: CoroutineScope = CoroutineScope(Dispatchers.Default)
 ) {
     private var catalog: ComponentCatalog = initialCatalog ?: ComponentCatalog()
+    val currentCatalog: ComponentCatalog get() = catalog
 
     private val _state = MutableStateFlow(createInitialProjectState())
     val state: StateFlow<ProjectState> = _state.asStateFlow()
