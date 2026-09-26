@@ -44,7 +44,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import io.github.chandu4221.composestudio.data.AtomicCategory
 import io.github.chandu4221.composestudio.data.CatalogRepository
 import io.github.chandu4221.composestudio.data.ComponentCatalog
 import io.github.chandu4221.composestudio.data.ComponentDefinition
@@ -305,31 +304,15 @@ fun LeftComponentsPanel(
                                                         )
                                                     )
                                                 },
-                                                badge = {
-                                                    Row(
-                                                        horizontalArrangement = Arrangement.spacedBy(4.dp),
-                                                        verticalAlignment = Alignment.CenterVertically
-                                                    ) {
-                                                        if (component.isExperimental) {
-                                                            StudioBadge(
-                                                                text = "Exp",
-                                                                containerColor = MaterialTheme.colorScheme.tertiaryContainer,
-                                                                contentColor = MaterialTheme.colorScheme.onTertiaryContainer
-                                                            )
-                                                        }
-                                                        val (badgeBg, badgeFg) = when (component.atomicCategory) {
-                                                            AtomicCategory.TEMPLATE -> MaterialTheme.colorScheme.tertiaryContainer to MaterialTheme.colorScheme.onTertiaryContainer
-                                                            AtomicCategory.ORGANISM -> MaterialTheme.colorScheme.primaryContainer to MaterialTheme.colorScheme.onPrimaryContainer
-                                                            AtomicCategory.MOLECULE -> MaterialTheme.colorScheme.secondaryContainer to MaterialTheme.colorScheme.onSecondaryContainer
-                                                            AtomicCategory.ATOM -> MaterialTheme.colorScheme.surfaceVariant to MaterialTheme.colorScheme.onSurfaceVariant
-                                                        }
+                                                badge = if (component.isExperimental) {
+                                                    {
                                                         StudioBadge(
-                                                            text = component.atomicCategory.name,
-                                                            containerColor = badgeBg,
-                                                            contentColor = badgeFg
+                                                            text = "Exp",
+                                                            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+                                                            contentColor = MaterialTheme.colorScheme.onTertiaryContainer
                                                         )
                                                     }
-                                                }
+                                                } else null
                                             )
                                         }
                                     }
@@ -452,11 +435,6 @@ private fun LiveLayersTree(
                     style = MaterialTheme.typography.bodySmall,
                     color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.weight(1f, fill = false)
-                )
-                StudioBadge(
-                    text = node.category.name,
-                    containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                    contentColor = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }

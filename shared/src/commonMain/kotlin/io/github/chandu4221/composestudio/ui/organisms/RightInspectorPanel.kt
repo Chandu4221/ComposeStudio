@@ -53,7 +53,6 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import io.github.chandu4221.composestudio.data.AtomicCategory
 import io.github.chandu4221.composestudio.data.SlotCardinality
 import io.github.chandu4221.composestudio.data.SlotDefinition
 import io.github.chandu4221.composestudio.state.ComponentNode
@@ -127,17 +126,6 @@ fun RightInspectorPanel(
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.SemiBold,
                                 color = MaterialTheme.colorScheme.onSurface
-                            )
-                            val (catBg, catFg) = when (selectedNode.category) {
-                                AtomicCategory.TEMPLATE -> MaterialTheme.colorScheme.tertiaryContainer to MaterialTheme.colorScheme.onTertiaryContainer
-                                AtomicCategory.ORGANISM -> MaterialTheme.colorScheme.primaryContainer to MaterialTheme.colorScheme.onPrimaryContainer
-                                AtomicCategory.MOLECULE -> MaterialTheme.colorScheme.secondaryContainer to MaterialTheme.colorScheme.onSecondaryContainer
-                                AtomicCategory.ATOM -> MaterialTheme.colorScheme.surfaceVariant to MaterialTheme.colorScheme.onSurfaceVariant
-                            }
-                            StudioBadge(
-                                text = selectedNode.category.name,
-                                containerColor = catBg,
-                                contentColor = catFg
                             )
                             if (parentScope != null) {
                                 StudioBadge(
@@ -1151,11 +1139,6 @@ private fun ComponentSlotsInspector(
                                             style = MaterialTheme.typography.bodySmall,
                                             fontWeight = FontWeight.Medium,
                                             color = MaterialTheme.colorScheme.onSurface
-                                        )
-                                        StudioBadge(
-                                            text = child.category.name,
-                                            containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                                            contentColor = MaterialTheme.colorScheme.onSurfaceVariant
                                         )
                                     }
 

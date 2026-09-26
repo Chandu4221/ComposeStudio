@@ -283,4 +283,53 @@ class SlotValidatorTest {
         // Active slot target is cleared after successful drop
         assertNull(store.state.value.selectedSlotName)
     }
+
+    @Test
+    fun initial_project_state_has_blank_scaffold_root() {
+        val state = StudioStore.createInitialProjectState()
+        assertEquals("Scaffold", state.rootNode?.catalogId)
+        assertEquals(AtomicCategory.TEMPLATE, state.rootNode?.category)
+        assertTrue(state.rootNode?.slots.orEmpty().isEmpty(), "Initial scaffold must have 0 child slots")
+        assertNull(state.selectedNodeId, "Initial selected node must be null for a blank canvas")
+        assertNull(state.selectedSlotName)
+    }
+
+    @Test
+    fun dropping_on_blank_canvas_routes_to_scaffold_content() {
+        val store = StudioStore(catalog)
+        val root = store.state.value.rootNode!!
+        assertEquals("Scaffold", root.catalogId)
+        assertTrue(root.slots.isEmpty())
+
+        // Drop a Button onto the blank canvas (no target slot specified)
+        val buttonDef = findDef("Button")
+        store.dispatch(
+            StudioIntent.DropComponent(
+                targetParentId = root.id,
+                targetSlotName = null,
+                component = buttonDef
+            )
+        )
+
+        val updatedRoot = store.state.value.rootNode!!
+        val contentChildren = updatedRoot.slots["content"].orEmpty()
+        assertEquals(1, contentChildren.size)
+        assertEquals("Button", contentChildren.first().catalogId)
+        assertEquals(contentChildren.first().id, store.state.value.selectedNodeId)
+    }
+
+    @Test
+    fun deleting_root_scaffold_resets_to_blank_scaffold() {
+        val store = StudioStore(catalog)
+        val rootId = store.state.value.rootNode!!.id
+
+        // Attempt to delete root Scaffold
+        store.dispatch(StudioIntent.DeleteNode(rootId))
+
+        val currentRoot = store.state.value.rootNode
+        assertTrue(currentRoot != null, "Canvas root must never be null")
+        assertEquals("Scaffold", currentRoot.catalogId)
+        assertTrue(currentRoot.slots.isEmpty())
+        assertNull(store.state.value.selectedNodeId)
+    }
 }

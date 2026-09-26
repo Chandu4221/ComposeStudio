@@ -103,7 +103,7 @@ class StudioStore(
 
             is StudioIntent.DeleteNode -> {
                 if (currentState.rootNode?.id == intent.nodeId) {
-                    currentState.copy(rootNode = null, selectedNodeId = null, selectedSlotName = null)
+                    createInitialProjectState()
                 } else {
                     val updatedRoot = currentState.rootNode?.removeNode(intent.nodeId)
                     val isDeletedSelected = currentState.selectedNodeId == intent.nodeId
@@ -226,56 +226,18 @@ class StudioStore(
 
     companion object {
         /**
-         * Builds an initial default project template matching the Compose preview frame.
+         * Builds an initial default project template: a blank canvas with Scaffold as root.
          */
         fun createInitialProjectState(): ProjectState {
-            val buttonNode = ComponentNode(
-                catalogId = "Button",
-                category = AtomicCategory.ATOM,
-                properties = mapOf(
-                    "text" to JsonPrimitive("Get Started"),
-                    "enabled" to JsonPrimitive(true)
-                )
-            )
-
-            val bodyText = ComponentNode(
-                catalogId = "Text",
-                category = AtomicCategory.ATOM,
-                properties = mapOf("text" to JsonPrimitive("Build beautiful apps with Jetpack Compose and Material 3."))
-            )
-
-            val headingText = ComponentNode(
-                catalogId = "Text",
-                category = AtomicCategory.ATOM,
-                properties = mapOf("text" to JsonPrimitive("Welcome to Compose"))
-            )
-
-            val contentColumn = ComponentNode(
-                catalogId = "Column",
-                category = AtomicCategory.ORGANISM,
-                slots = mapOf(
-                    "content" to listOf(headingText, bodyText, buttonNode)
-                )
-            )
-
-            val topBarNode = ComponentNode(
-                catalogId = "TopAppBar",
-                category = AtomicCategory.ORGANISM,
-                properties = mapOf("title" to JsonPrimitive("Compose App"))
-            )
-
             val scaffoldRoot = ComponentNode(
                 catalogId = "Scaffold",
                 category = AtomicCategory.TEMPLATE,
-                slots = mapOf(
-                    "topBar" to listOf(topBarNode),
-                    "content" to listOf(contentColumn)
-                )
+                slots = emptyMap()
             )
 
             return ProjectState(
                 rootNode = scaffoldRoot,
-                selectedNodeId = buttonNode.id
+                selectedNodeId = null
             )
         }
     }

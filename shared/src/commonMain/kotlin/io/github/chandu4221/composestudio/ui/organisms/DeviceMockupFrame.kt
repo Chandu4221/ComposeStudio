@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -179,7 +180,7 @@ private fun RenderNode(
         "Scaffold", "BottomSheetScaffold" -> {
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxSize()
                     .selectableWrapper(node.id, isSelected, onSelectNode)
             ) {
                 // TopBar Slot (SINGLE cardinality)
@@ -197,18 +198,19 @@ private fun RenderNode(
                 }
 
                 // Main Content Slot (MULTIPLE cardinality)
+                val contentNodes = node.slots["content"].orEmpty()
+                val isContentTargeted = isSelected && selectedSlotName == "content"
                 Box(
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxWidth()
-                        .verticalScroll(rememberScrollState())
+                        .then(if (contentNodes.isNotEmpty()) Modifier.verticalScroll(rememberScrollState()) else Modifier),
+                    contentAlignment = if (contentNodes.isEmpty()) Alignment.Center else Alignment.TopStart
                 ) {
-                    val contentNodes = node.slots["content"].orEmpty()
-                    val isContentTargeted = isSelected && selectedSlotName == "content"
                     if (contentNodes.isEmpty()) {
                         EmptySlotPlaceholder(
                             slotName = "content",
-                            hint = "Drop Column or Layout here",
+                            hint = "Drop components or layouts here",
                             isSelected = isContentTargeted,
                             onClick = { onSelectSlot(node.id, if (isContentTargeted) null else "content") }
                         )
